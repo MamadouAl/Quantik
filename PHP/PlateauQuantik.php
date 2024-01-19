@@ -9,8 +9,7 @@ class PlateauQuantik
     const SW = 2;
     const SE = 3;
 
-    private $cases=[]; // Tableau de 16 cases
-
+    private $cases=[];
     public function __construct()
     {
 

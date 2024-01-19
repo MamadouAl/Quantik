@@ -85,7 +85,27 @@ class PieceQuantik
 
     public function __toString()
     {
-        return "Piece : ".$this->couleur." ".$this->forme;
+        $couleurText = ($this->couleur === self::WHITE) ? 'WH' : 'BL';
+        $formeText = '';
+
+        switch ($this->forme) {
+            case self::CUBE:
+                $formeText = 'Cu';
+                break;
+            case self::CONE:
+                $formeText = 'Cô';
+                break;
+            case self::CYLINDRE:
+                $formeText = 'Cy';
+                break;
+            case self::SPHERE:
+                $formeText = 'Sph';
+                break;
+            default:
+                $formeText = 'Inconnue';
+        }
+
+        return "Piece : $couleurText $formeText";
     }
 
 }
