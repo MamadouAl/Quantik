@@ -1,7 +1,6 @@
 <?php
 
-class ArrayPieceQuantik implements ArrayAccess, Countable
-{
+class ArrayPieceQuantik implements ArrayAccess, Countable{
     // #pieceQuantik : PieceQuantik[]
     protected $pieceQuantik;
 
