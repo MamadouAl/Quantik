@@ -2,6 +2,9 @@
 
 class PieceQuantik
 {
+    /* Constantes de classe qui définissent
+        les couleurs et les formes des pièces Quantik
+    */
     const WHITE=0;
     const BLACK =1;
     const VOID=0;
@@ -12,18 +15,32 @@ class PieceQuantik
 
     private $couleur;
     private $forme;
+
+    /**
+     *  Constructeur de la classe permettant de créer une pièce Quantik
+     * @param $couleur
+     * @param $forme
+     */
     private function __construct($couleur, $forme)
     {
         $this->couleur = $couleur;
         $this->forme = $forme;
-
     }
 
+    /**
+     * Permet de récupérer la couleur d'une pièce Quantik
+     * @return mixed
+     */
     public function getCouleur()
     {
         return $this->couleur;
     }
 
+    /**
+     *  Permet de modifier la couleur d'une pièce Quantik
+     * @param $couleur
+     * @return void
+     */
     public function setCouleur($couleur)
     {
         $this->couleur = $couleur;
@@ -93,7 +110,7 @@ class PieceQuantik
                 $formeText = 'Cu';
                 break;
             case self::CONE:
-                $formeText = 'Cô';
+                $formeText = 'Co';
                 break;
             case self::CYLINDRE:
                 $formeText = 'Cy';
@@ -105,7 +122,7 @@ class PieceQuantik
                 $formeText = 'Inconnue';
         }
 
-        return "Piece : $couleurText $formeText";
+        return "($couleurText $formeText) \n";
     }
 
 }
