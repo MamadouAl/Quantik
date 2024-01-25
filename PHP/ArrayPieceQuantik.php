@@ -3,7 +3,7 @@
 require 'PieceQuantik.php';
 class ArrayPieceQuantik implements ArrayAccess, Countable
 {
-    private $pieceQuantiks;
+    protected $pieceQuantiks;
 
     /**
      * Constructeur de la classe permettant de créer un tableau de pièces Quantik

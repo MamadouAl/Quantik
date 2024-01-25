@@ -82,7 +82,7 @@ class PlateauQuantik {
         for ($i = 0; $i < self::NBROWS / 2; $i++) {
             for ($j = 0; $j < self::NBCOLS / 2; $j++) {
                 // Assurez-vous d'appeler addPieceQuantik avec un objet PieceQuantik
-                $corner->addPieceQuantik($this->board[$i][$j]->offsetGet(0));
+                $corner->addPieceQuantik($this->board[$i][$j]);
             }
         }
         return $corner;

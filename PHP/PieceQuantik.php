@@ -119,7 +119,7 @@ class PieceQuantik
                 $formeText = 'Sph';
                 break;
             default:
-                $formeText = 'Inconnue';
+                $formeText = 'Aucune';
         }
 
         return "($couleurText $formeText) \n";

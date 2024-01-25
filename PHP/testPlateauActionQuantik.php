@@ -1,6 +1,7 @@
 <?php
 
 require 'PlateauQuantik.php';
+require_once 'ActionQuantik.php';
 
 $plateau = new PlateauQuantik();
 
@@ -27,10 +28,38 @@ $plateau->setPiece(2, 3, PieceQuantik::initBlackSphere());
 $plateau->setPiece(3, 0, PieceQuantik::initWhiteCylindre());
 $plateau->setPiece(3, 1, PieceQuantik::initWhiteCube());
 $plateau->setPiece(3, 2, PieceQuantik::initWhiteCone());
-$plateau->setPiece(3, 3, PieceQuantik::initWhiteSphere());
+$piece = PieceQuantik::initWhiteSphere();
+$plateau->setPiece(3, 3, $piece);
 
 // Afficher le plateau
+$var = "<h2>Test de la Classe 'PlateauQuantik'</h2><hr/>";
 for ($i = 0; $i < PlateauQuantik::NBROWS; $i++) {
-    echo "Row $i: " . $plateau->getRow($i) . "\n";
-    echo "\n";
+    $var .= "Row $i: " . $plateau->getRow($i) . "\n";
+    $var .= "<br/>\n";
 }
+
+$var .= "<br/>\n";
+
+// Tester la méthode getCorner()
+for ($dir = 0; $dir < 4; $dir++) {
+    $var .= "Corner $dir: " . $plateau->getCorner($dir) . "\n";
+    $var .= "<br/>\n";
+}
+$var .= "<br/>\n";
+
+
+$actionQuantik = new ActionQuantik($plateau);
+
+$var .= "<h2>Test de la Classe 'ActionQuantik'</h2><hr/>";
+$var .= "\nisRowWin(0): " . ($actionQuantik->isRowWin(0) ? 'true' : 'false') . "<br/>\n";
+$var .= "isCornerWin(0): " . ($actionQuantik->isCornerWin(0) ? 'true' : 'false') . "<br/>\n";
+$var .= "isColWin(0): " . ($actionQuantik->isColWin(0) ? 'true' : 'false') . "<br/>\n";
+$var .="isValidePose(3, 3, $piece): " . ($actionQuantik->isValidePose(3, 3, $piece) ? 'true' : 'false') . "<br/>\n";
+
+$actionQuantik->posePiece(2, 2, PieceQuantik::initBlackCylindre());
+$var .= "<p>Plateau après pose de la pièce noire 'Cube' en (2, 2):</p>\n";
+for ($i = 0; $i < PlateauQuantik::NBROWS; $i++) {
+    $var .= "Row $i: " . $plateau->getRow($i) . "<br/>\n";
+}
+$var .= "<br/>\n";
+echo $var;
