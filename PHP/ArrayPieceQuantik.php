@@ -92,10 +92,19 @@ class ArrayPieceQuantik implements ArrayAccess, Countable
         return $arrayPieceQuantik;
     }
 
+    // Méthode offsetGet pour l'interface ArrayAccess
     public function offsetGet($offset): PieceQuantik
     {
-        return $this->pieceQuantiks[$offset];
+        // Vérifier si la clé existe avant d'accéder à l'élément du tableau
+        if (array_key_exists($offset, $this->pieceQuantiks)) {
+            return $this->pieceQuantiks[$offset];
+        } else {
+            // Gérer le cas où la clé n'existe pas, vous pouvez retourner une valeur par défaut ou lancer une exception
+            throw new InvalidArgumentException("Cette clé n'existe pas : $offset");
+        }
     }
+
+
 
     #[\ReturnTypeWillChange]
     public function count()
