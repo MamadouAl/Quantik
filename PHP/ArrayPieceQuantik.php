@@ -106,10 +106,9 @@ class ArrayPieceQuantik implements ArrayAccess, Countable
 
 
 
-    #[\ReturnTypeWillChange]
-    public function count()
-    {
-        return count($this->pieceQuantiks);
+
+    public function count() : int{
+        return sizeof($this->pieceQuantiks);
     }
 
     public function offsetExists($offset): bool

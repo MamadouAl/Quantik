@@ -91,29 +91,22 @@ class ActionQuantik {
      * @return bool
      */
     private static function isPieceValide(ArrayPieceQuantik $pieces, PieceQuantik $p): bool {
-        $resultat = true;
-        foreach ($pieces as $piece){
-            if($piece->getForme() == $p->getForme() || $piece->getCouleur() == $p->getCouleur()){
-                $resultat = false;
+        for($i=0; $i < count($pieces); $i++){
+            if($pieces->getPieceQuantiks($i)->getForme() == $p->getForme() && $pieces->getPieceQuantiks($i)->getCouleur() != $p->getCouleur()){
+                return false;
             }
         }
-        return $resultat;
+        return true;
     }
 
     private static function isComboWin(ArrayPieceQuantik $pieces): bool {
+        $seenForms = array();
         for($i = 0; $i < PlateauQuantik::NBROWS; $i++) {
-            $tab[$i] = false;
-        }
-        for($i = 0; $i < PlateauQuantik::NBROWS; $i++) {
-            $temp = $pieces[$i]->getForme()-1; //on récupère la forme de la pièce et si elle est vide on met -1
-            if($temp > -1) { //on vérifie que la pièce n'est pas vide
-                $tab[$i] = true;
-            }
-        }
-        for($i = 0; $i < PlateauQuantik::NBROWS; $i++) {
-            if($tab[$i] == false) {
+            $form = $pieces[$i]->getForme();
+            if($form == 0 || in_array($form, $seenForms)) { // Si la pièce est vide ou si la forme a déjà été vue
                 return false;
             }
+            $seenForms[] = $form; // Ajoute la forme à la liste des formes vues
         }
         return true;
     }
