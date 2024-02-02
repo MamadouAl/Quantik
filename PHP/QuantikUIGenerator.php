@@ -65,11 +65,12 @@ class QuantikUIGenerator extends AbstractUIGenerator
 
 
     protected static function getFormSelectionPiece(ArrayPieceQuantik $pieces): string {
-        $form ='';
+        $form = '<form action="traiteFormQuantik.php" method="post">';
         for ($i = 0; $i < count($pieces); $i++) {
-            $form .= '<bouton type="submit" name="piece" value="' . $i . '" disabled>'
+            $form .= '<bouton type="submit" name="piece" value="' . $i . '">'
                 . $pieces->getPieceQuantiks($i) . '</bouton>';
         }
+        $form .= '</form>';
         return $form;
     }
 
@@ -92,9 +93,6 @@ class QuantikUIGenerator extends AbstractUIGenerator
         return $form;
       
     } 
-    
-    
-    
     
 
     protected static function getFormBoutonAnnulerChoixPiece(): string {
@@ -140,11 +138,13 @@ class QuantikUIGenerator extends AbstractUIGenerator
     public static function getPageSelectionPiece(QuantikGame $quantik, int $couleurActive): string {
         $page = self::getDebutHTML('Quantik - Sélection de pièce');
         if($couleurActive == 0){  // si c'est au tour des noirs
-            $page .= self::getDivPiecesDisponibles($quantik->pieceBlack, 0); //
-            $page .= self::getFormSelectionPiece($quantik-> pieceBlack);
+            $page .= self::getDivPlateauQuantik($quantik->plateau);
+            $page .= self::getFormSelectionPiece($quantik->pieceBlack);
+            $page .= self::getDivPiecesDisponibles($quantik->pieceWhite);
         }else if($couleurActive == 1){ // si c'est au tour des blancs
-            $page .= self::getDivPiecesDisponibles($quantik->pieceWhite, 1);
-            $page .= self::getFormSelectionPiece($quantik-> pieceWhite);
+            $page .= self::getDivPlateauQuantik($quantik->plateau);
+            $page .= self::getDivPiecesDisponibles($quantik->pieceWhite);
+            $page .= self::getFormSelectionPiece($quantik->pieceBlack);
         }
         $page .= self::getDivPlateauQuantik($quantik->plateau);
         $page .= self::getFinHTML();
@@ -152,36 +152,37 @@ class QuantikUIGenerator extends AbstractUIGenerator
     }
 
 //A revoir
-    public static function getPagePosePiece(QuantikGame $quantik, int $couleurActive,int $posSelection): string {
+   
+    public static function getPagePosePiece(QuantikGame $quantik, int $couleurActive, int $posSelection): string {
+        //doit retourner la page permettant au jours de poser la pièce dans le plateau avec l'option d'annuler le choix de la pièce
         $page = self::getDebutHTML('Quantik - Pose de pièce');
-        $page .= '<form action="traiteFormQuantik.php" method="post">';
-        if($couleurActive == 0) {  // si c'est au tour des noirs
-            $page .= self::getDivPiecesDisponibles($quantik->pieceBlack, 0); //
-            $page .= self::getFormSelectionPiece($quantik->pieceBlack);
-            //if (isset())
-            //...
-        }
-        return '';
-    }
+        if($$couleurActive==0){
+            $page .= self::getDivPiecesDisponibles($quantik->pieceBlack, $posSelection);
+            $page .= self::getFormPlateauQuantik($quantik->plateau, $quantik->pieceBlack->getPieceQuantiks($posSelection));
+            $page .= self::getFormBoutonAnnulerChoixPiece();
+            $page .=self::getDivPiecesDisponibles($quantik->pieceWhite);
+        }else if($couleurActive==1){
+            $page .= self::getDivPiecesDisponibles($quantik->pieceWhite, $posSelection);
+            $page .= self::getFormPlateauQuantik($quantik->plateau, $quantik->pieceWhite->getPieceQuantiks($posSelection));
+            $page .= self::getFormBoutonAnnulerChoixPiece();
+            $page .= self::getDivPiecesDisponibles($quantik->pieceBlack);
 
+        }
+        $page .= self::getFinHTML();
+        return $page;
+       
+    }
+    
     /**
      * Genere la page de victoire
      */
     public static function getPageVictoire(QuantikGame $quantik, int $couleurActive, int $posSelection): string {
-        $page =self::getDebutHTML('Quantik - Victoire');
-        $page .= 'form action="traiteFormQuantik.php" method="get">';
-
-        //on affiche les pièces disponibles
-        if($couleurActive == 0){
-            $page .= self::getFormSelectionPiece($quantik->pieceBlack);
-            $page .= self::getFormSelectionPiece($quantik->pieceWhite);
-        }else if($couleurActive == 1) {
-            $page .= self::getFormSelectionPiece($quantik->pieceWhite);
-            $page .= self::getFormSelectionPiece($quantik->pieceBlack);
-        }
-        //on affiche le plateau et le message de victoire
+        $page = self::getDebutHTML('Quantik - Victoire');
+        $page .= self::getDivPiecesDisponibles($quantik->pieceBlack , $posSelection);
+        $page .= self::getDivPiecesDisponibles($quantik->pieceWhite, $posSelection);
         $page .= self::getDivPlateauQuantik($quantik->plateau);
         $page .= self::getDivMeessageVictoire($couleurActive);
+        $page .= self::getLienRecommencer();
         $page .= self::getFinHTML();
         return $page;
     }
