@@ -4,11 +4,27 @@ require_once 'ActionQuantik.php';
 class QuantikUIGenerator extends AbstractUIGenerator
 {
     protected static function getButtonClass(PieceQuantik $piece): string {
-        if ($piece->getForme() == PieceQuantik::VOID)
-            return 'empty';
-        $buttonClass = 'votre_classe_de_bouton';
-        return '<button class="' . $buttonClass . '">Votre Bouton</button>';
+        $buttonClass = 'default-button-class';
+        switch ($piece->getForme()) {
+            case PieceQuantik::CUBE:
+                $buttonClass = 'cube-button';
+                break;
+            case PieceQuantik::CONE:
+                $buttonClass = 'cone-button';
+                break;
+            case PieceQuantik::CYLINDRE:
+                $buttonClass = 'cylindre-button';
+                break;
+            case PieceQuantik::SPHERE:
+                $buttonClass = 'sphere-button';
+                break;
+            default:
+                $buttonClass = 'empty-button';
+                break;
+        }
+        return $buttonClass;
     }
+
 
     /**
      * Permet de générer le code HTML pour représenter le plateau de jeu
@@ -19,9 +35,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
 
         $divPlateau = '<div class="plateau-quantik">';
         $divPlateau .= '<p><table>';
-        // Parcourez les lignes du plateau et générez le code HTML pour chaque pièce
         foreach ($pieces as $row) {
-            // Commencez une nouvelle ligne du tableau
             $divPlateau .= '<tr>';
             foreach ($row as $piece) {
                 $divPlateau .= "<td>"
