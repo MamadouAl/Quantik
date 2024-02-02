@@ -25,7 +25,6 @@ class QuantikUIGenerator extends AbstractUIGenerator
         return $buttonClass;
     }
 
-
     /**
      * Permet de générer le code HTML pour représenter le plateau de jeu
      */
@@ -49,17 +48,18 @@ class QuantikUIGenerator extends AbstractUIGenerator
         return $divPlateau;
     }
 
-    protected static function getDivPiecesDisponibles(ArrayPieceQuantik $pieces, int $player): string {
+    /**
+     * recupère les pièces disponibles
+     * @param ArrayPieceQuantik $pieces
+     * @param int $pos
+     * @return string
+     */
+    protected static function getDivPiecesDisponibles(ArrayPieceQuantik $pieces, int $pos=-1): string {
         $divPieces = '<div class="pieces-disponibles">';
-
-        foreach ($pieces as $piece) {
-            // Vérifiez si la pièce est disponible pour le joueur spécifié
-            if ($piece->isAvailableForPlayer($player)) {
-                $divPieces .= '<button type="submit" name="active" enabled >
-                (' . $piece->getRepresentation() . ')</button>';
-            }
+        for ($i = 0; $i < count($pieces); $i++) {
+            $piece = $pieces->getPieceQuantiks($i);
+            $divPieces .= '<button type="submit" name="active" disabled > '.$piece->__toString() . '</button>';
         }
-        $divPieces .= '</div>';
         return $divPieces;
     }
 
@@ -74,8 +74,6 @@ class QuantikUIGenerator extends AbstractUIGenerator
     }
 
     protected static function getFormPlateauQuantik(PlateauQuantik $plateau, PieceQuantik $piece): string {
-        //TODO dans cette methode  il doit me renoyer le plateau en activant les case jouable seulement. pour savoir si une case est jouable on doit utiliser la methode isValidePose. isvalidPose prend un arrayPieceQuantik et un PieceQuantik en parametre et retourne un boolean  
-       
         $actionQuantik = new ActionQuantik($plateau);
        
         $form = '<form action="traiteFormQuantik.php" method="post">';
