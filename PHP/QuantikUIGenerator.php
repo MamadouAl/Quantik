@@ -1,5 +1,6 @@
 <?php
 require_once 'AbstractUIGenerator.php';
+require_once 'ActionQuantik.php';
 class QuantikUIGenerator extends AbstractUIGenerator
 {
     protected static function getButtonClass(PieceQuantik $piece): string {
@@ -59,44 +60,30 @@ class QuantikUIGenerator extends AbstractUIGenerator
     }
 
     protected static function getFormPlateauQuantik(PlateauQuantik $plateau, PieceQuantik $piece): string {
-        // Commencez le formulaire
+        //TODO dans cette methode  il doit me renoyer le plateau en activant les case jouable seulement. pour savoir si une case est jouable on doit utiliser la methode isValidePose. isvalidPose prend un arrayPieceQuantik et un PieceQuantik en parametre et retourne un boolean  
+       
+        $actionQuantik = new ActionQuantik($plateau);
+       
         $form = '<form action="traiteFormQuantik.php" method="post">';
-
-        // Ajoutez un champ caché pour l'action du formulaire
-        $form .= '<input type="hidden" name="action" value="poser_piece">';
-
-        // Commencez le tableau pour représenter visuellement le plateau
-        $form .= '<table class="plateau-table">';
-
-        // Ajoutez la logique pour générer le contenu du plateau en fonction des informations récupérées
-        foreach ($plateau->getCasesJouables($piece) as $row => $col) {
-            // Commencez une nouvelle ligne du tableau
-            $form .= '<tr>';
-
-            foreach ($plateau->getPiece($row, $col) as $cellPiece) {
-                // Générez le code HTML pour chaque pièce du plateau dans une cellule
-                $buttonValue = $row . ',' . $col; // Format des coordonnées à transmettre
-                $form .= '<td class="case-plateau">';
-                $form .= '<button type="submit" name="positionPiece" value="' . $buttonValue . '">' . $cellPiece->getRepresentation() . '</button>';
-                $form .= '</td>';
+        for ($i = 0; $i < PlateauQuantik::NBROWS; $i++) {
+            for ($j = 0; $j < PlateauQuantik::NBCOLS; $j++) {
+                if ($actionQuantik->isValidePose($i, $j, $piece)) {
+                    $form .= '<button type="submit" name="pos" value="' . $i . ',' . $j . '" enabled>'
+                        . $plateau->getPiece($i, $j) . '</button>';
+                } else {
+                    $form .= '<button type="submit" name="pos" value="' . $i . ',' . $j . '" disabled>'
+                        . $plateau->getPiece($i, $j) . '</button>';
+                }
             }
-
-            // Fermez la ligne du tableau
-            $form .= '</tr>';
         }
-
-        // Fermez le tableau
-        $form .= '</table>';
-
-        // Ajoutez le bouton de soumission
-        $form .= '<button type="submit">Poser la pièce</button>';
-
-        // Fermez le formulaire
         $form .= '</form>';
-
-        // Retournez le HTML généré
         return $form;
-    }
+      
+    } 
+    
+    
+    
+    
 
     protected static function getFormBoutonAnnulerChoixPiece(): string {
         $res = '"<div>  Changer la pièce </br>"';
