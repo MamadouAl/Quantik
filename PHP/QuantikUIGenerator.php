@@ -4,6 +4,7 @@ require_once 'AbstractUIGenerator.php';
 require_once 'PlateauQuantik.php';
 require_once 'ArrayPieceQuantik.php';
 require_once 'QuantikGame.php';
+require_once 'ActionQuantik.php';
 
 class QuantikUIGenerator extends AbstractUIGenerator
 {
@@ -33,24 +34,34 @@ class QuantikUIGenerator extends AbstractUIGenerator
      * Permet de générer le code HTML pour représenter le plateau de jeu
      */
     protected static function getDivPlateauQuantik(PlateauQuantik $plateau): string {
-        for ($i = 0; $i < PlateauQuantik::NBROWS; $i++)
-            $pieces = $plateau->getRow($i);
-
         $divPlateau = '<div class="plateau-quantik">';
         $divPlateau .= '<p><table>';
-        foreach ($pieces as $row) {
+
+        // Parcourir les lignes du plateau
+        for ($i = 0; $i < PlateauQuantik::NBROWS; $i++) {
+            $pieces = $plateau->getRow($i);
             $divPlateau .= '<tr>';
-            foreach ($row as $piece) {
-                $divPlateau .= "<td>"
-                    ."<button type='submit' disabled >".$piece."</button>"
-                    ."</td>";
+            for ($j = 0; $j < PlateauQuantik::NBCOLS; $j++) {
+                // Récupére la pièce à la position actuelle
+                $piece = $pieces[$j];
+
+                // Vérifier si la case est vide
+                if ($piece->getForme() == null){
+                    $divPlateau .= '<td><button type="submit" disabled>(empty)</button></td>';
+                } else {
+                    // Si la case contient une pièce, afficher la pièce correspondante
+                    $divPlateau .= "<td><button type='submit' disabled>{$piece->__toString()}</button></td>";
+                }
             }
+
             $divPlateau .= '</tr>';
         }
+
         $divPlateau .= '</table></p>';
         $divPlateau .= '</div>';
         return $divPlateau;
     }
+
 
     /**
      * recupère les pièces disponibles
@@ -156,8 +167,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
         return $page;
     }
 
-//A revoir
-   
+
     public static function getPagePosePiece(QuantikGame $quantik, int $couleurActive, int $posSelection): string {
         //doit retourner la page permettant au jours de poser la pièce dans le plateau avec l'option d'annuler le choix de la pièce
         $page = self::getDebutHTML('Quantik - Pose de pièce');
@@ -187,16 +197,19 @@ class QuantikUIGenerator extends AbstractUIGenerator
         $page .= self::getDivPiecesDisponibles($quantik->pieceWhite, $posSelection);
         $page .= self::getDivPlateauQuantik($quantik->plateau);
         $page .= self::getDivMeessageVictoire($couleurActive);
-        $page .= self::getLienRecommencer();
         $page .= self::getFinHTML();
         return $page;
     }
 }
-
 $pg = new PlateauQuantik();
+$action = new ActionQuantik($pg);
+
 $qg = new QuantikGame();
 $qg->plateau = $pg;
 $qg->pieceBlack = ArrayPieceQuantik::initPiecesNoires();
 $qg->pieceWhite = ArrayPieceQuantik::initPiecesBlanches();
+//echo QuantikUIGenerator::getPageSelectionPiece($qg, 0);
+//pose une pièce
+$action->posePiece(0, 0, $qg->pieceBlack->getPieceQuantiks(0));
+echo QuantikUIGenerator::getPageVictoire($qg, 0, 0);
 
-echo QuantikUIGenerator::getPageSelectionPiece($qg, 0);
