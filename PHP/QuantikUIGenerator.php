@@ -42,16 +42,8 @@ class QuantikUIGenerator extends AbstractUIGenerator
             $pieces = $plateau->getRow($i);
             $divPlateau .= '<tr>';
             for ($j = 0; $j < PlateauQuantik::NBCOLS; $j++) {
-                // Récupére la pièce à la position actuelle
                 $piece = $pieces[$j];
-
-                // Vérifier si la case est vide
-                if ($piece->getForme() == null){
-                    $divPlateau .= '<td><button type="submit" disabled>(empty)</button></td>';
-                } else {
-                    // Si la case contient une pièce, afficher la pièce correspondante
                     $divPlateau .= "<td><button type='submit' disabled>{$piece->__toString()}</button></td>";
-                }
             }
             $divPlateau .= '</tr>';
         }
@@ -98,9 +90,6 @@ class QuantikUIGenerator extends AbstractUIGenerator
                 if($i == 3){
                     $form .= '</br>';
                 }
-              
-             
-
         }
         $form .= '</form>';
         return $form;
@@ -113,7 +102,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
         for ($i = 0; $i < PlateauQuantik::NBROWS; $i++) {
             for ($j = 0; $j < PlateauQuantik::NBCOLS; $j++) {
                 if ($actionQuantik->isValidePose($i, $j, $piece)) {
-                    $form .= '<button type="submit" name="pos" value="' . $i . ',' . $j . '" enabled>'
+                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" enabled>'
                         . $plateau->getPiece($i, $j)->__toString() . '</button>';
                 } else {
                     $form .= '<button type="submit" name="pos" value="' . $i . ',' . $j . '" disabled>'
