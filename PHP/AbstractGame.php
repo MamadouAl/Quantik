@@ -1,5 +1,4 @@
 <?php
-//classe abstraite AbstractGame
 
 abstract class AbstractGame
 {

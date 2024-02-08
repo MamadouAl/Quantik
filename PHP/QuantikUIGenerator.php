@@ -1,6 +1,10 @@
 <?php
+require_once 'AbstractGame.php';
 require_once 'AbstractUIGenerator.php';
-require_once 'ActionQuantik.php';
+require_once 'PlateauQuantik.php';
+require_once 'ArrayPieceQuantik.php';
+require_once 'QuantikGame.php';
+
 class QuantikUIGenerator extends AbstractUIGenerator
 {
     protected static function getButtonClass(PieceQuantik $piece): string {
@@ -67,8 +71,9 @@ class QuantikUIGenerator extends AbstractUIGenerator
     protected static function getFormSelectionPiece(ArrayPieceQuantik $pieces): string {
         $form = '<form action="traiteFormQuantik.php" method="post">';
         for ($i = 0; $i < count($pieces); $i++) {
-            $form .= '<bouton type="submit" name="piece" value="' . $i . '">'
-                . $pieces->getPieceQuantiks($i) . '</bouton>';
+            $form .= '<button type="submit" name="piece" enabled value="' . $i . '">'
+                . $pieces->getPieceQuantiks($i) . '</button>';
+
         }
         $form .= '</form>';
         return $form;
@@ -76,7 +81,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
 
     protected static function getFormPlateauQuantik(PlateauQuantik $plateau, PieceQuantik $piece): string {
         $actionQuantik = new ActionQuantik($plateau);
-       
+
         $form = '<form action="traiteFormQuantik.php" method="post">';
         for ($i = 0; $i < PlateauQuantik::NBROWS; $i++) {
             for ($j = 0; $j < PlateauQuantik::NBCOLS; $j++) {
@@ -93,7 +98,6 @@ class QuantikUIGenerator extends AbstractUIGenerator
         return $form;
       
     } 
-    
 
     protected static function getFormBoutonAnnulerChoixPiece(): string {
         $res = '"<div>  Changer la pièce </br>"';
@@ -140,6 +144,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
         if($couleurActive == 0){  // si c'est au tour des noirs
             $page .= self::getDivPlateauQuantik($quantik->plateau);
             $page .= self::getFormSelectionPiece($quantik->pieceBlack);
+            $page .='</br>';
             $page .= self::getDivPiecesDisponibles($quantik->pieceWhite);
         }else if($couleurActive == 1){ // si c'est au tour des blancs
             $page .= self::getDivPlateauQuantik($quantik->plateau);
@@ -186,5 +191,12 @@ class QuantikUIGenerator extends AbstractUIGenerator
         $page .= self::getFinHTML();
         return $page;
     }
-
 }
+
+$pg = new PlateauQuantik();
+$qg = new QuantikGame();
+$qg->plateau = $pg;
+$qg->pieceBlack = ArrayPieceQuantik::initPiecesNoires();
+$qg->pieceWhite = ArrayPieceQuantik::initPiecesBlanches();
+
+echo QuantikUIGenerator::getPageSelectionPiece($qg, 0);

@@ -1,6 +1,6 @@
 <?php
 
-require 'PieceQuantik.php';
+require_once 'PieceQuantik.php';
 class ArrayPieceQuantik implements ArrayAccess, Countable
 {
     protected $pieceQuantiks;

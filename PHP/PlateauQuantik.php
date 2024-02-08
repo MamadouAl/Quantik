@@ -1,6 +1,6 @@
 <?php
 
-require 'ArrayPieceQuantik.php';
+require_once 'ArrayPieceQuantik.php';
 
 class PlateauQuantik {
     const NW = 0;
