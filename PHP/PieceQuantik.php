@@ -102,7 +102,17 @@ class PieceQuantik
 
     public function __toString()
     {
-        $couleurText = ($this->couleur === self::WHITE) ? 'WH' : 'BL';
+        // $couleurText = ($this->couleur === self::WHITE) ? 'WH' : 'BL';
+        if($this->couleur==self::WHITE){
+            $couleurText='WH';
+        }
+        else if($this->couleur==self::BLACK){
+            $couleurText='BL';
+        }
+        else if($this->couleur==self::VOID){
+            $couleurText='VD';
+        }
+
         $formeText = '';
 
         switch ($this->forme) {
