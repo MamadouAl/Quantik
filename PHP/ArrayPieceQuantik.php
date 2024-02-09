@@ -19,7 +19,7 @@ class ArrayPieceQuantik implements ArrayAccess, Countable
      * @param int $position
      * @return mixed
      */
-    public function getPieceQuantiks(int $position)
+    public function getPieceQuantiks(int $position) : PieceQuantik
     {
         return $this->pieceQuantiks[$position];
     }

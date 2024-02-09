@@ -1,19 +1,21 @@
 <?php
+require_once 'PHP/QuantikUIGenerator.php';
 session_start();
-$_SESSION['pieceBlanche'] = $_POST['piece'];
-$_SESSION['posePieceBlanche'] = $_POST['posePiece'];
 
-
-$piece = $_POST['piece'];
-echo "Piece selectionnée : " . $piece . "<br>";
-echo $_SESSION['pageChoisirBlanche'];
-//$_SESSION[''] = $_SERVER['REQUEST_URI'];
-
-if(isset($_SESSION['pageChoisirBlanche'])){
-    header('Location: PagePosePieceBlanche.php');
+//si on a cliqué sur une pièce
+if (isset($_POST['piece'])) {
+    $_SESSION['pieceNoire'] = $_POST['piece'];
+    $_SESSION['etat'] = 'posePiece';
+    header('Location: index.php');
 }
-/*
-if(isset($_SESSION['pagePoseBlanche'])){
-    header('Location: PageChoisirPieceBlanche.php');
+if (isset($_POST['posePiece'])) {
+    $pos = explode(',', $_POST['posePiece']); //on récupère les coordonnées
+    $piece = $_SESSION['QuantikGame']->pieceBlack->getPieceQuantiks($_SESSION['pieceNoire']);
+    $_SESSION['actionQ']->posePiece($pos[0], $pos[1], $piece);
+    //mettre une pièce vide à la place de la pièce choisie
+    $_SESSION['QuantikGame']->pieceBlack->setPieceQuantiks($_SESSION['pieceNoire'], PieceQuantik::initVoid());
+
+    $_SESSION['etat'] = 'choixPiece';
+    $_SESSION['QuantikGame']->currentPlayer = ($_SESSION['QuantikGame']->currentPlayer + 1) % 2;
+    header('Location: index.php');
 }
-*/

@@ -105,7 +105,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
                     $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" enabled>'
                         . $plateau->getPiece($i, $j)->__toString() . '</button>';
                 } else {
-                    $form .= '<button type="submit" name="pos" value="' . $i . ',' . $j . '" disabled>'
+                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" disabled>'
                         . $plateau->getPiece($i, $j) . '</button>';
                 }
                 
