@@ -60,7 +60,8 @@ class QuantikUIGenerator extends AbstractUIGenerator
     protected static function getDivPiecesDisponibles(ArrayPieceQuantik $pieces, int $pos=-1): string {
         $divPieces = '<div class="pieces-disponibles">';
         for ($i = 0; $i < count($pieces); $i++) {
-           
+            if($pieces->getPieceQuantiks($i)->getForme()== null)
+            continue;
 
                 $piece = $pieces->getPieceQuantiks($i);
                 $class='';
@@ -85,6 +86,8 @@ class QuantikUIGenerator extends AbstractUIGenerator
     protected static function getFormSelectionPiece(ArrayPieceQuantik $pieces): string {
         $form = '<form action="traiteFormQuantik.php" method="post">';
         for ($i = 0; $i < count($pieces); $i++) {
+            if($pieces->getPieceQuantiks($i)->getForme()== null)
+                continue;
             $form .= '<button type="submit" name="piece" enabled value="' . $i . '">'
                 . $pieces->getPieceQuantiks($i) . '</button>';
                 if($i == 3){
