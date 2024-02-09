@@ -21,12 +21,16 @@ echo "Etat de la partie : " . $_SESSION['QuantikGame']->currentPlayer . "<br>";
 switch ($_SESSION['etat']) {
     case "choixPiece":
         echo QuantikUIGenerator::getPageSelectionPiece($_SESSION['QuantikGame'], $_SESSION['QuantikGame']->currentPlayer);
+
         break;
     case "posePiece":
-        echo QuantikUIGenerator::getPagePosePiece($_SESSION['QuantikGame'], $_SESSION['QuantikGame']->currentPlayer, $_SESSION['pieceNoire']);
+        echo QuantikUIGenerator::getPagePosePiece($_SESSION['QuantikGame'], $_SESSION['QuantikGame']->currentPlayer, $_SESSION['piece']);
+        
+    $_SESSION['QuantikGame']->currentPlayer = ($_SESSION['QuantikGame']->currentPlayer + 1) % 2;
+
         break;
     case "finPartie":
-        echo QuantikUIGenerator::getPageVictoire($_SESSION['QuantikGame'], $_SESSION['QuantikGame']->currentPlayer);
+      //      echo QuantikUIGenerator::getPageVictoire($_SESSION['QuantikGame'], $_SESSION['QuantikGame']->currentPlayer);
         break;
     default:
         echo "Erreur";

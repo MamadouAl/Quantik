@@ -173,8 +173,9 @@ class QuantikUIGenerator extends AbstractUIGenerator
             $page .='</br>';
             $page .= self::getDivPiecesDisponibles($quantik->pieceWhite);
         }else if($couleurActive == 1){ // si c'est au tour des blancs
-            $page .= self::getFormSelectionPiece($quantik->pieceBlack);
-            $page .= self::getDivPiecesDisponibles($quantik->pieceWhite);
+            $page .= self::getDivPiecesDisponibles($quantik->pieceBlack);
+            $page .= self::getFormSelectionPiece($quantik->pieceWhite);
+$page .= '';
 
         }
         $page .= '</div>';
