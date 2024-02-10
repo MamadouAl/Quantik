@@ -43,7 +43,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
             $divPlateau .= '<tr>';
             for ($j = 0; $j < PlateauQuantik::NBCOLS; $j++) {
                 $piece = $pieces[$j];
-                    $divPlateau .= "<td><button type='submit' disabled>{$piece->__toString()}</button></td>";
+                    $divPlateau .= "<td><button class='button is-link is-light is-hovered' type='submit'  disabled>{$piece->__toString()}</button></td>";
             }
             $divPlateau .= '</tr>';
         }
@@ -60,14 +60,14 @@ class QuantikUIGenerator extends AbstractUIGenerator
     protected static function getDivPiecesDisponibles(ArrayPieceQuantik $pieces, int $pos=-1): string {
         $divPieces = '<div class="pieces-disponibles">';
         for ($i = 0; $i < count($pieces); $i++) {
-            if($pieces->getPieceQuantiks($i)->getCouleur()== PieceQuantik::VOID)
+            if($pieces->getPieceQuantiks($i)->getForme() ==null)
                 continue;
             $piece = $pieces->getPieceQuantiks($i);
             if($i==$pos){
-                $divPieces .= '<button type="submit" name="active" disabled class="button is-dark"> '.$piece->__toString() . '</button>';
+                $divPieces .= '<button type="submit" name="active" disabled class="button is-success"> '.$piece->__toString() . '</button>';
     
                 }else{
-                    $divPieces .= '<button type="submit" name="active" disabled > '.$piece->__toString() . '</button>';
+                    $divPieces .= '<button type="submit" name="active" disabled class="button is-link is-light is-hovered" > '.$piece->__toString() . '</button>';
                 }
 
             if($i == 3){
@@ -84,9 +84,9 @@ class QuantikUIGenerator extends AbstractUIGenerator
     protected static function getFormSelectionPiece(ArrayPieceQuantik $pieces): string {
         $form = '<form action="traiteFormQuantik.php" method="post">';
         for ($i = 0; $i < count($pieces); $i++) {
-            if($pieces->getPieceQuantiks($i)->getCouleur()== PieceQuantik::VOID)
+            if($pieces->getPieceQuantiks($i)->getForme() ==null)
                 continue;
-            $form .= '<button type="submit" name="piece" enabled value="' . $i . '">'
+            $form .= '<button type="submit" name="piece" enabled class="button is-link is-light" value="' . $i . '">'
                 . $pieces->getPieceQuantiks($i) . '</button>';
                 if($i == 3){
                     $form .= '</br>';
@@ -103,10 +103,10 @@ class QuantikUIGenerator extends AbstractUIGenerator
         for ($i = 0; $i < PlateauQuantik::NBROWS; $i++) {
             for ($j = 0; $j < PlateauQuantik::NBCOLS; $j++) {
                 if ($actionQuantik->isValidePose($i, $j, $piece)) {
-                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" enabled>'
+                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" enabled class="button is-link is-light">'
                         . $plateau->getPiece($i, $j)->__toString() . '</button>';
                 } else {
-                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" disabled>'
+                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" disabled class="button is-link is-light is-hovered">'
                         . $plateau->getPiece($i, $j) . '</button>';
                 }
                 
@@ -171,8 +171,8 @@ class QuantikUIGenerator extends AbstractUIGenerator
             $page .='</br>';
             $page .= self::getDivPiecesDisponibles($quantik->pieceWhite);
         }else if($couleurActive == 1){ // si c'est au tour des blancs
-            $page .= self::getFormSelectionPiece($quantik->pieceBlack);
-            $page .= self::getDivPiecesDisponibles($quantik->pieceWhite);
+            $page .= self::getDivPiecesDisponibles($quantik->pieceBlack);
+            $page .= self::getFormSelectionPiece($quantik->pieceWhite);
 
         }
         $page .= '</div>';

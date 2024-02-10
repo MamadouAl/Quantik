@@ -79,10 +79,11 @@ class ActionQuantik {
         $this->plateau->setPiece($rowNum, $colNum, $piece);
     }
 
-
+    /*
     public function __toString(): string {
         return $this->plateau->__toString();
     }
+    */
 
     /**
      * Méthode privée pour savoir si une pièce est valide

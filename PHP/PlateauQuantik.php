@@ -24,7 +24,6 @@ class PlateauQuantik {
         }
     }
 
-
     /**
      * Méthode pour obtenir une ligne du plateau
      * @param $rowNumber
