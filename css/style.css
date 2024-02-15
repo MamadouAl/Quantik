@@ -8,9 +8,21 @@ body{
 .cube{
     width: 100px;
     height: 100px;
-    background-image: url('../image/cube2.webp');
+    background-image: url('../image/cube_noir.png');
     /* diminuer la taille de l'image */
-    background-size: 50px 50px;
+    background-size: 150px 150px;
+    /* centrer l'image */
+    background-position: center;
+    /* centrer l'image */
+    background-repeat: no-repeat;
+
+}
+.cube_blanc{
+    width: 100px;
+    height: 100px;
+    background-image: url('../image/cuble_blanc.png');
+    /* diminuer la taille de l'image */
+    background-size: 150px 150px;
     /* centrer l'image */
     background-position: center;
     /* centrer l'image */
@@ -20,9 +32,22 @@ body{
 .cone{
     width: 100px;
     height: 100px;
-    background-image: url('../image/cone.png');
+    background-image: url('../image/cone_noir.png');
     /* diminuer la taille de l'image */
-    background-size: 50px 50px;
+    background-size: 150px 150px;
+    /* centrer l'image */
+    background-position: center;
+    /* centrer l'image */
+    background-repeat: no-repeat;
+
+ 
+}
+.cone_blanc{
+    width: 100px;
+    height: 100px;
+    background-image: url('../image/cone_blanc.png');
+    /* diminuer la taille de l'image */
+    background-size: 150px 150px;
     /* centrer l'image */
     background-position: center;
     /* centrer l'image */
@@ -34,8 +59,20 @@ body{
 .sphere{
     width: 100px;
     height: 100px;
-    background-image: url('../image/sphere.png');
-    background-size: 50px 50px;
+    background-image: url('../image/sphere_noir.png');
+    background-size: 150px 150px;
+    /* centrer l'image */
+    background-position: center;
+    /* centrer l'image */
+    background-repeat: no-repeat;
+
+
+}
+.sphere_blanc{
+    width: 100px;
+    height: 100px;
+    background-image: url('../image/sphere_blanc.png');
+    background-size: 150px 150px;
     /* centrer l'image */
     background-position: center;
     /* centrer l'image */
@@ -47,8 +84,19 @@ body{
 .cylindre{
     width: 100px;
     height: 100px;
-    background-image: url('../image/cylindre.png');
-    background-size: 50px 50px;
+    background-image: url('../image/cylindre_noir.png');
+    background-size: 150px 150px;
+    /* centrer l'image */
+    background-position: center;
+    /* centrer l'image */
+    background-repeat: no-repeat;
+}
+
+.cylindre_blanc{
+    width: 100px;
+    height: 100px;
+    background-image: url('../image/cylindre_blanc.png');
+    background-size: 150px 150px;
     /* centrer l'image */
     background-position: center;
     /* centrer l'image */
