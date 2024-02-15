@@ -72,7 +72,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
                 }
                 // Ajout de styles personnalisés pour le bouton
                 $divPlateau .= '<td style="text-align: center;">';
-                $divPlateau .= '<button class=" '.$buttonClass.'" type="submit" disabled >
+                $divPlateau .= '<button class=" '.$buttonClass.'" type="submit" disabled style="background-color: ;" >
                   '. $piece->__toString() .' 
                 </button>';
                 $divPlateau .= '</td>';
@@ -165,12 +165,8 @@ class QuantikUIGenerator extends AbstractUIGenerator
                 $buttonClass = self::getButtonClass($p);
             } 
                 if ($actionQuantik->isValidePose($i, $j, $piece)) {
-                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" enabled class="'.$buttonClass.' " > <span  style="background-color:#C7F1B5">'   
-                    . $plateau->getPiece($i, $j)->__toString() . 
-
-                    '
-                    </span>
-                    </button>';
+                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" enabled class="'.$buttonClass.' " > '   
+                    . $plateau->getPiece($i, $j)->__toString() . '</button>';
                 } else {
                     $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" disabled class="'.$buttonClass.'  " style="background-color:#FEEEEE">'
                         . $plateau->getPiece($i, $j) . '</button>';

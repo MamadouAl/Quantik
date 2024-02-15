@@ -19,7 +19,7 @@ class AbstractUIGenerator
         </head>
         <body>
         <div class="columns is-centered">
-            <h1 class="title is-1">Quantik</h1>
+            <h1 class="title is-1 has-text-dark box">Quantik</h1>
         </div>
        
         ';
