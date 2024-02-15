@@ -42,11 +42,16 @@ class QuantikUIGenerator extends AbstractUIGenerator
             $pieces = $plateau->getRow($i);
             $divPlateau .= '<tr>';
             for ($j = 0; $j < PlateauQuantik::NBCOLS; $j++) {
-                $piece = $pieces[$j];
-                
+                $piece = $pieces[$j]; 
+                if($piece->getForme() != null|| $piece->getCouleur() != null){
+                    $couleur = $piece->getCouleur() == 0 ? 'couleurBlanche' : 'couleurNoire';
+                }
+                else{
+                    $couleur='couleurvide';
+                }
                 // Ajout de styles personnalisés pour le bouton
                 $divPlateau .= '<td style="text-align: center;">';
-                $divPlateau .= '<button class="  '.self::getButtonClass($piece).'" type="submit" disabled >
+                $divPlateau .= '<button class="  '.self::getButtonClass($piece).' '.$couleur.'" type="submit" disabled >
                   '. $piece->__toString() .' 
                 </button>';
                 $divPlateau .= '</td>';
@@ -72,13 +77,19 @@ class QuantikUIGenerator extends AbstractUIGenerator
             if($pieces->getPieceQuantiks($i)->getForme() ==null)
                 continue;
             $piece = $pieces->getPieceQuantiks($i);
+            if($piece->getForme() != null|| $piece->getCouleur() != null){
+                $couleur = $piece->getCouleur() == 0 ? 'couleurBlanche' : 'couleurNoire';
+            }
+            else{
+                $couleur='couleurvide';
+            }
             if($i==$pos){
-                $divPieces .= '<button type="submit" name="active" disabled class="'.self::getButtonClass($piece).'" style="background-color: #848B83;">
+                $divPieces .= '<button type="submit" name="active" disabled class="'.self::getButtonClass($piece).' '.$couleur.'" style="background-color: #848B83;">
                 
                 '.$piece->__toString() . '</button>';
     
                 }else{
-                    $divPieces .= '<button type="submit" name="active" disabled class="'.self::getButtonClass($piece).'" > 
+                    $divPieces .= '<button type="submit" name="active" disabled class="'.self::getButtonClass($piece).'  '.$couleur.'" > 
                    
                     '.$piece->__toString() . '</button>';
                 }
@@ -99,10 +110,15 @@ class QuantikUIGenerator extends AbstractUIGenerator
         $form = '<form action="traiteFormQuantik.php" method="post">';
         $cmp=0;
         for ($i = 0; $i < count($pieces); $i++) {
-
+            if($pieces->getPieceQuantiks($i)->getForme() != null|| $pieces->getPieceQuantiks($i)->getCouleur() != null){
+                $couleur = $pieces->getPieceQuantiks($i)->getCouleur() == 0 ? 'couleurBlanche' : 'couleurNoire';
+            }
+            else{
+                $couleur='couleurvide';
+            }
             if($pieces->getPieceQuantiks($i)->getForme() ==null)
                 continue;
-            $form .= '<button type="submit" name="piece" enabled class="'.self::getButtonClass($pieces->getPieceQuantiks($i)).'" value="' . $i . '" >
+            $form .= '<button type="submit" name="piece" enabled class="'.self::getButtonClass($pieces->getPieceQuantiks($i)).' '.$couleur.'" value="' . $i . '" >
             ' . $pieces->getPieceQuantiks($i) . '</button>';
             $cmp++;
                 if($cmp== 4){
@@ -119,11 +135,22 @@ class QuantikUIGenerator extends AbstractUIGenerator
         $form = '<form action="traiteFormQuantik.php" method="post">';
         for ($i = 0; $i < PlateauQuantik::NBROWS; $i++) {
             for ($j = 0; $j < PlateauQuantik::NBCOLS; $j++) {
+               $p = $plateau->getPiece($i, $j);
+                if($p->getForme() != null|| $p->getCouleur() != null){
+                    $couleur = $p->getCouleur() == 0 ? 'couleurBlanche' : 'couleurNoire';
+                }
+                else{
+                    $couleur='couleurvide';
+                }
                 if ($actionQuantik->isValidePose($i, $j, $piece)) {
-                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" enabled class="'.self::getButtonClass($plateau->getPiece($i, $j)).'" style="background-color:#C7F1B5">'
-                        . $plateau->getPiece($i, $j)->__toString() . '</button>';
+                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" enabled class="'.self::getButtonClass($plateau->getPiece($i, $j)).' '.$couleur.'" > <span  style="background-color:#C7F1B5">'   
+                    . $plateau->getPiece($i, $j)->__toString() . 
+
+                    '
+                    </span>
+                    </button>';
                 } else {
-                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" disabled class="'.self::getButtonClass($plateau->getPiece($i, $j)).'" style="background-color:#FEEEEE">'
+                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" disabled class="'.self::getButtonClass($plateau->getPiece($i, $j)).' '.$couleur.' " style="background-color:#FEEEEE">'
                         . $plateau->getPiece($i, $j) . '</button>';
                 }
                 
@@ -182,7 +209,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
         $page .= '<div class="container">';
 
         $page .='<div class="columns">';
-        $page .='<div class="column is-6">';
+        $page .='<div class="column is-6 box is-bordered">';
         if($couleurActive == 0){  // si c'est au tour des noirs
             $page .= self::getFormSelectionPiece($quantik->pieceBlack);
             $page .='</br>';
@@ -200,7 +227,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
         }
         $page .= '</div>';
 
-        $page .= '<div class="column is-6">';
+        $page .= '<div class="column is-6 box is-bordered">';
         $page .= self::getDivPlateauQuantik($quantik->plateau);
         $page .= '</div>';
 
@@ -217,7 +244,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
         $page .= '<div class="container">';
 
         $page .='<div class="columns">';
-        $page .='<div class="column is-6">';
+        $page .='<div class="column is-6 has-border">';
 
         if($couleurActive==0){
             $page .= self::getDivPiecesDisponibles($quantik->pieceBlack, $posSelection);
@@ -226,7 +253,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
             $page .= '</br>';
             $page .=self::getDivPiecesDisponibles($quantik->pieceWhite);
             $page .= '</div>';
-            $page .='<div class="column is-6">';
+            $page .='<div class="column is-6 has-border">';
             $page .= self::getFormPlateauQuantik($quantik->plateau, $quantik->pieceBlack->getPieceQuantiks($posSelection));
             $page .= '</div>';
         }else if($couleurActive==1){
@@ -236,7 +263,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
             $page .= '</br>';
             $page .= self::getDivPiecesDisponibles($quantik->pieceWhite, $posSelection);
             $page .= '</div>';
-            $page .='<div class="column is-6">'; 
+            $page .='<div class="column is-6 has-border">'; 
             $page .= self::getFormPlateauQuantik($quantik->plateau, $quantik->pieceWhite->getPieceQuantiks($posSelection));
         $page .= '</div>';
         }
@@ -259,7 +286,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
         $page .= '<div class="container">';
 
         $page .='<div class="columns">';
-        $page .='<div class="column is-6">';
+        $page .='<div class="column is-6 box is-bordered">';
         if($couleurActive==0){
            
         $page .= self::getDivPiecesDisponibles($quantik->pieceBlack , $posSelection);
@@ -269,7 +296,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
             $page .= self::getDivPiecesDisponibles($quantik->pieceWhite, $posSelection);
         }
         $page .= '</div>';
-        $page .='<div class="column is-6">';
+        $page .='<div class="column is-6 box is-bordered">';
         $page .= self::getDivPlateauQuantik($quantik->plateau);
         $page .= '</div>';
         $page .= '</div>';

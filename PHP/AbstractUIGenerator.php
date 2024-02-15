@@ -16,9 +16,13 @@ class AbstractUIGenerator
             <title>'.$title.'</title>
             <link rel="stylesheet" href="./css/style.css">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         </head>
-        <body>';
+        <body>
+        <div class="columns is-centered">
+            <h1 class="title is-1">Quantik</h1>
+        </div>
+       
+        ';
     }
 
     /**
