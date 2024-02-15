@@ -9,22 +9,22 @@ require_once 'ActionQuantik.php';
 class QuantikUIGenerator extends AbstractUIGenerator
 {
     protected static function getButtonClass(PieceQuantik $piece): string {
-        $buttonClass = 'default-button-class';
+        // $buttonClass = 'default-button-class';
         switch ($piece->getForme()) {
             case PieceQuantik::CUBE:
-                $buttonClass = 'fas fa-cube';
+                $buttonClass = 'cube';
                 break;
             case PieceQuantik::CONE:
-                $buttonClass = 'fas fa-cone';
+                $buttonClass = 'cone';
                 break;
             case PieceQuantik::CYLINDRE:
-                $buttonClass = 'fas fa-cylinder';
+                $buttonClass = 'cylindre';
                 break;
             case PieceQuantik::SPHERE:
-                $buttonClass = 'fas fa-globe';
+                $buttonClass = 'sphere';
                 break;
             default:
-                $buttonClass = '';
+                $buttonClass = 'default';
                 break;
         }
         return $buttonClass;
@@ -36,20 +36,20 @@ class QuantikUIGenerator extends AbstractUIGenerator
     protected static function getDivPlateauQuantik(PlateauQuantik $plateau): string {
         $divPlateau = '<div class="plateau-quantik">';
         $divPlateau .= '<p><table>';
-
+    
         // Parcourir les lignes du plateau
         for ($i = 0; $i < PlateauQuantik::NBROWS; $i++) {
             $pieces = $plateau->getRow($i);
             $divPlateau .= '<tr>';
             for ($j = 0; $j < PlateauQuantik::NBCOLS; $j++) {
                 $piece = $pieces[$j];
-                    $divPlateau .= '<td><button class="button is-link is-light is-hovered" type="submit"   disabled>
-                    <span class="icon">
-                        <i class="'.self::getButtonClass($piece).'"></i>
-                         </span>
-                         <span> '.$piece->__toString().'</span>
-                   
-                    </button></td>';
+                
+                // Ajout de styles personnalisés pour le bouton
+                $divPlateau .= '<td style="text-align: center;">';
+                $divPlateau .= '<button class="  '.self::getButtonClass($piece).'" type="submit" disabled >
+                  '. $piece->__toString() .' 
+                </button>';
+                $divPlateau .= '</td>';
             }
             $divPlateau .= '</tr>';
         }
@@ -57,7 +57,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
         $divPlateau .= '</div>';
         return $divPlateau;
     }
-
+    
     /**
      * recupère les pièces disponibles
      * @param ArrayPieceQuantik $pieces
@@ -66,25 +66,27 @@ class QuantikUIGenerator extends AbstractUIGenerator
      */
     protected static function getDivPiecesDisponibles(ArrayPieceQuantik $pieces, int $pos=-1): string {
         $divPieces = '<div class="pieces-disponibles">';
+        $cmp=0;
         for ($i = 0; $i < count($pieces); $i++) {
 
             if($pieces->getPieceQuantiks($i)->getForme() ==null)
                 continue;
             $piece = $pieces->getPieceQuantiks($i);
             if($i==$pos){
-                $divPieces .= '<button type="submit" name="active" disabled class="button is-success">
-                <span class="icon">
-                        <i class="'.self::getButtonClass($piece).'"></i>
-                         </span>
+                $divPieces .= '<button type="submit" name="active" disabled class="'.self::getButtonClass($piece).'" style="background-color: #848B83;">
+                
                 '.$piece->__toString() . '</button>';
     
                 }else{
-                    $divPieces .= '<button type="submit" name="active" disabled class="button is-link is-light is-hovered" > '.$piece->__toString() . '</button>';
+                    $divPieces .= '<button type="submit" name="active" disabled class="'.self::getButtonClass($piece).'" > 
+                   
+                    '.$piece->__toString() . '</button>';
                 }
 
-            if($i == 3){
-                $divPieces .= '</br>';
-            }
+                $cmp++;
+                if($cmp==4){
+                    $divPieces .= '</br>';
+                }
 
 
         }
@@ -95,13 +97,15 @@ class QuantikUIGenerator extends AbstractUIGenerator
 
     protected static function getFormSelectionPiece(ArrayPieceQuantik $pieces): string {
         $form = '<form action="traiteFormQuantik.php" method="post">';
+        $cmp=0;
         for ($i = 0; $i < count($pieces); $i++) {
 
             if($pieces->getPieceQuantiks($i)->getForme() ==null)
                 continue;
-            $form .= '<button type="submit" name="piece" enabled class="button is-link is-light" value="' . $i . '">'
-                . $pieces->getPieceQuantiks($i) . '</button>';
-                if($i == 3){
+            $form .= '<button type="submit" name="piece" enabled class="'.self::getButtonClass($pieces->getPieceQuantiks($i)).'" value="' . $i . '" >
+            ' . $pieces->getPieceQuantiks($i) . '</button>';
+            $cmp++;
+                if($cmp== 4){
                     $form .= '</br>';
                 }
         }
@@ -116,10 +120,10 @@ class QuantikUIGenerator extends AbstractUIGenerator
         for ($i = 0; $i < PlateauQuantik::NBROWS; $i++) {
             for ($j = 0; $j < PlateauQuantik::NBCOLS; $j++) {
                 if ($actionQuantik->isValidePose($i, $j, $piece)) {
-                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" enabled class="button is-link is-light">'
+                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" enabled class="'.self::getButtonClass($plateau->getPiece($i, $j)).'" style="background-color:#C7F1B5">'
                         . $plateau->getPiece($i, $j)->__toString() . '</button>';
                 } else {
-                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" disabled class="button is-link is-light is-hovered">'
+                    $form .= '<button type="submit" name="posePiece" value="' . $i . ',' . $j . '" disabled class="'.self::getButtonClass($plateau->getPiece($i, $j)).'" style="background-color:#FEEEEE">'
                         . $plateau->getPiece($i, $j) . '</button>';
                 }
                 
@@ -182,9 +186,15 @@ class QuantikUIGenerator extends AbstractUIGenerator
         if($couleurActive == 0){  // si c'est au tour des noirs
             $page .= self::getFormSelectionPiece($quantik->pieceBlack);
             $page .='</br>';
+            $page .='</br>';
+            $page .='</br>';
             $page .= self::getDivPiecesDisponibles($quantik->pieceWhite);
         }else if($couleurActive == 1){ // si c'est au tour des blancs
             $page .= self::getDivPiecesDisponibles($quantik->pieceBlack);
+            $page .='</br>';
+            $page .='</br>';
+            $page .='</br>';
+
             $page .= self::getFormSelectionPiece($quantik->pieceWhite);
 
         }
@@ -211,6 +221,9 @@ class QuantikUIGenerator extends AbstractUIGenerator
 
         if($couleurActive==0){
             $page .= self::getDivPiecesDisponibles($quantik->pieceBlack, $posSelection);
+            $page .= '</br>';
+            $page .= '</br>';
+            $page .= '</br>';
             $page .=self::getDivPiecesDisponibles($quantik->pieceWhite);
             $page .= '</div>';
             $page .='<div class="column is-6">';
@@ -218,6 +231,9 @@ class QuantikUIGenerator extends AbstractUIGenerator
             $page .= '</div>';
         }else if($couleurActive==1){
             $page .= self::getDivPiecesDisponibles($quantik->pieceBlack);
+            $page .= '</br>';
+            $page .= '</br>';
+            $page .= '</br>';
             $page .= self::getDivPiecesDisponibles($quantik->pieceWhite, $posSelection);
             $page .= '</div>';
             $page .='<div class="column is-6">'; 

@@ -1,0 +1,36 @@
+
+
+.cube{
+    width: 100px;
+    height: 100px;
+    background-image: url('../image/cone.png');
+
+}
+.cone{
+    width: 100px;
+    height: 100px;
+
+    background-image: url('https://static-00.iconduck.com/assets.00/cone-icon-512x512-vh76sjdp.png');
+ 
+}
+
+.sphere{
+    width: 100px;
+    height: 100px;
+    background-image: url('https://static-00.iconduck.com/assets.00/cone-icon-512x512-vh76sjdp.png');
+
+
+}
+
+.cylindre{
+    width: 100px;
+    height: 100px;
+    background-image: url('https://static-00.iconduck.com/assets.00/cone-icon-512x512-vh76sjdp.png');
+
+    /* background-color: #ff0; */
+}
+.default{
+    width: 100px;
+    height: 100px;
+
+}
