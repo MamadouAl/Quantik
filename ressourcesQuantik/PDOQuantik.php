@@ -1,12 +1,11 @@
 <?php
 
-namespace Quantik2024;
+namespace Quantik2024 ;
 require_once '../PHP/Player.php';
 
 use PDO;
 use PDOStatement;
-use Player;
-
+use Quantik2024\Player;
 
 class PDOQuantik
 {
@@ -46,7 +45,7 @@ class PDOQuantik
             self::$selectPlayerByName = self::$pdo->prepare('SELECT * FROM Player WHERE name=:name');
         self::$selectPlayerByName->bindValue(':name', $name, PDO::PARAM_STR);
         self::$selectPlayerByName->execute();
-        $player = self::$selectPlayerByName->fetchObject('../PHP/Player');
+        $player = self::$selectPlayerByName->fetchObject('Quantik2024\Player');
         return ($player) ? $player : null;
     }
 

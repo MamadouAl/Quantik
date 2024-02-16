@@ -15,7 +15,6 @@ $form = '<!DOCTYPE html>
 <body><div class="quantik"></div><h1>Accès au salon Quantik</h1><h2>Identification du joueur</h2>
 <form action="'.$_SERVER['PHP_SELF'].'" method="post">
 <fieldset><legend>Nom</legend>
-
           <input type="text" name="playerName" />
           <input type="submit" name="action" value="connecter"></fieldset></form>
  </div></body></html>';
@@ -33,7 +32,7 @@ if (isset($_REQUEST['playerName'])) {
 
     header('HTTP/1.1 303 See Other');
     header('Location: index.php');
-    echo "fegrejrehb";
+
 }
 else {
 

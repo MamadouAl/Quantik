@@ -1,5 +1,5 @@
 <?php
-
+namespace Quantik2024;
 
 class Player
 {
