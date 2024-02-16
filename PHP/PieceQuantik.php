@@ -118,10 +118,10 @@ class PieceQuantik
     public function __toString()
     {
         if($this->couleur==self::WHITE){
-            $couleurText='WH';
+            $couleurText='Wh';
         }
         else if($this->couleur==self::BLACK){
-            $couleurText='BL';
+            $couleurText='Bl';
         }
         else if($this->couleur==self::VOID){
             $couleurText='VD';
@@ -146,4 +146,17 @@ class PieceQuantik
         return "($couleurText $formeText) \n";
     }
 
+    /* TODO implantation schéma UML */
+    public function getJson(): string {
+        return '{"forme":'. $this->forme . ',"couleur":'.$this->couleur. '}';
+    }
+
+    public static function initPieceQuantik(string|object $json): PieceQuantik {
+        if (is_string($json)) {
+            $props = json_decode($json, true);
+            return new PieceQuantik($props['forme'], $props['couleur']);
+        }
+        else
+            return new PieceQuantik($json->forme, $json->couleur);
+    }
 }

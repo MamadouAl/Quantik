@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="ec15fac9-fca7-45e4-a4ba-d02a7fdee406" name="http://ust-infoserv.ad.univ-lehavre.fr/~km233436/quantik" url="http://ust-infoserv.ad.univ-lehavre.fr/~km233436/quantik">
+        <fileTransfer mountedRoot="$PROJECT_DIR$/../../../KM233436/Bureau/PROG WEB/quantik" accessType="MOUNT" port="0" />
+      </webServer>
+    </option>
+  </component>
+</project>

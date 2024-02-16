@@ -142,4 +142,26 @@ class ArrayPieceQuantik implements ArrayAccess, Countable
         }
         return $str;
     }
+
+
+    public function getJson(): string
+    {
+        $json = "[";
+        $jTab = [];
+        foreach ($this->pieceQuantiks as $p)
+            $jTab[] = $p->getJson();
+        $json .= implode(',', $jTab);
+        return $json . ']';
+    }
+
+    public static function initArrayPieceQuantik(string|array $json): ArrayPieceQuantik
+    {
+        $apq = new ArrayPieceQuantik();
+        if (is_string($json)) {
+            $json = json_decode($json);
+        }
+        foreach ($json as $j)
+            $apq[] = PieceQuantik::initPieceQuantik($j);
+        return $apq;
+    }
 }
