@@ -6,6 +6,7 @@ require_once '../PHP/Player.php';
 use PDO;
 use PDOStatement;
 use Quantik2024\Player;
+use QuantikGame;
 
 class PDOQuantik
 {
@@ -16,6 +17,9 @@ class PDOQuantik
         switch ($sgbd) {
             case 'pgsql':
                 self::$pdo = new PDO('pgsql:host=' . $host . ' dbname=' . $db . ' user=' . $user . ' password=' . $password);
+                break;
+            case 'mysql':
+                self::$pdo = new PDO('mysql:host=' . $host . ';dbname=' . $db, $user, $password);
                 break;
             default:
                 exit ("Type de sgbd non correct : $sgbd fourni, 'mysql' ou 'pgsql' attendu");

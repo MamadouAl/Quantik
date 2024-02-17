@@ -1,5 +1,6 @@
 <?php
 
+
 class QuantikGame extends AbstractGame
 {
     public PlateauQuantik $plateau;
@@ -40,8 +41,8 @@ class QuantikGame extends AbstractGame
         }
         $qg = new QuantikGame($players);
         $qg->plateau = PlateauQuantik::initPlateauQuantik($object->plateau);
-        $qg->piecesBlanches = ArrayPieceQuantik::initArrayPieceQuantik($object->piecesBlanches);
-        $qg->piecesNoires = ArrayPieceQuantik::initArrayPieceQuantik($object->piecesNoires);
+        $qg->pieceWhite = ArrayPieceQuantik::initArrayPieceQuantik($object->piecesBlanches);
+        $qg->pieceBlack = ArrayPieceQuantik::initArrayPieceQuantik($object->piecesNoires);
         $qg->currentPlayer = $object->currentPlayer;
         $qg->gameID = $object->gameID;
         $qg->gameStatus = $object->gameStatus;
