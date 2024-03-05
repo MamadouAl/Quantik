@@ -4,8 +4,10 @@ namespace Quantik2024 ;
 require_once '../PHP/Player.php';
 
 use PDO;
+use PDOException;
 use PDOStatement;
 use Quantik2024\Player;
+
 
 class PDOQuantik
 {
@@ -43,10 +45,12 @@ class PDOQuantik
     {
         if (!isset(self::$selectPlayerByName))
             self::$selectPlayerByName = self::$pdo->prepare('SELECT * FROM Player WHERE name=:name');
-        self::$selectPlayerByName->bindValue(':name', $name, PDO::PARAM_STR);
+        self::$selectPlayerByName->bindParam(':name', $name, PDO::PARAM_STR);
         self::$selectPlayerByName->execute();
-        $player = self::$selectPlayerByName->fetchObject('Quantik2024\Player');
-        return ($player) ? $player : null;
+        $player = self::$selectPlayerByName->fetch();
+        if($player)
+            return new \Quantik2024\Player($player['name'], $player['id']);
+        return null;
     }
 
     /* requêtes préparées pour l'entiteGameQuantik */
@@ -64,8 +68,24 @@ class PDOQuantik
      */
     public static function createGameQuantik(string $playerName, string $json): void
     {
-        /* TODO */
+        if (!isset(self::$createGameQuantik)) {
+            self::$createGameQuantik = self::$pdo->prepare('INSERT INTO QuantikGame(playerOne, gameStatus, json) VALUES ((SELECT id FROM Player WHERE name = :playerName), :gameStatus, :json)');
+        }
+
+        $gamestatus = 'constructed'; // Statut initial du jeu
+        self::$createGameQuantik->bindParam(':playerName', $playerName, PDO::PARAM_STR);
+        self::$createGameQuantik->bindParam(':gameStatus', $gamestatus, PDO::PARAM_STR);
+        self::$createGameQuantik->bindParam(':json', $json, PDO::PARAM_STR);
+
+        try {
+            self::$createGameQuantik->execute();
+        } catch (PDOException $e) {
+            echo "Erreur lors de la création de la partie : " . $e->getMessage();
+        }
     }
+
+
+
 
     /**
      * initialisation et execution de $saveGameQuantik la requête préparée pour changer
@@ -91,6 +111,7 @@ class PDOQuantik
     public static function getGameQuantikById(int $gameId): ?QuantikGame
     {
         /* TODO */
+        return null;
     }
     /**
      * initialisation et execution de $selectAllGameQuantik la requête préparée pour récupérer toutes
@@ -99,6 +120,7 @@ class PDOQuantik
     public static function getAllGameQuantik(): array
     {
         /* TODO */
+        return [];
     }
 
     /**
@@ -109,6 +131,7 @@ class PDOQuantik
     public static function getAllGameQuantikByPlayerName(string $playerName): array
     {
         /* TODO */
+        return [];
     }
     /**
      * initialisation et execution de la requête préparée pour récupérer
@@ -117,6 +140,10 @@ class PDOQuantik
     public static function getLastGameIdForPlayer(string $playerName): int
     {
         /* TODO */
+        return 0;
     }
 
 }
+
+
+

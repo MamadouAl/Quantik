@@ -1,4 +1,7 @@
 <?php
+
+use Quantik2024\QuantikGame;
+
 require_once 'PHP/QuantikUIGenerator.php';
 
 session_start();

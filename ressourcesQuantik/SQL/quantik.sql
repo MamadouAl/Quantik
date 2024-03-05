@@ -14,3 +14,6 @@ CREATE TABLE QuantikGame(
                             json text NOT NULL,
                             CONSTRAINT players CHECK ( playerOne<>playerTwo)
 );
+
+select * from Player;
+select * from QuantikGame;
