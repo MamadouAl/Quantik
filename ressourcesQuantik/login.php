@@ -2,13 +2,6 @@
 
 namespace Quantik2024;
 
-use PDO;
-use PDOStatement;
-use Quantik2024\Player;
-use Quantik2024\QuantikGame;
-use Quantik2024\AbstractGame;
-use Quantik2024\PDOQuantik;
-
 
 session_start();
 function getPageLogin(): string {
@@ -32,7 +25,7 @@ return $form;
 if (isset($_REQUEST['playerName'])) {
     // connexion à la base de données
     require_once 'env/db.php';
-    require_once 'PDOQuantik.php';
+    require_once '../PHP/PDOQuantik.php';
     PDOQuantik::initPDO($_ENV['sgbd'],$_ENV['host'],$_ENV['database'],$_ENV['user'],$_ENV['password']);
     $player = PDOQuantik::selectPlayerByName($_REQUEST['playerName']);
     if (is_null($player))

@@ -1,20 +1,23 @@
 <?php
 namespace Quantik2024;
-require_once './ressourcesQuantik/PDOQuantik.php';
+require_once 'PHP/PDOQuantik.php';
 require_once './ressourcesQuantik/env/db.php';
 require_once 'PHP/QuantikGame.php';
+
 use AbstractUIGenerator;
 use PlateauQuantik;
-use Quantik2024\PDOQuantik;
-use Quantik2024\QuantikGame;
-
-
 
 session_start();
+if (!isset($_SESSION['player'])) {
+    header('HTTP/1.1 303 See Other');
+    header('Location: ressourcesQuantik/login.php');
+    exit();
+}
+PDOQuantik::initPDO($_ENV['sgbd'],$_ENV['host'],$_ENV['database'],$_ENV['user'],$_ENV['password']);
+
 
 switch ($_POST['action']) {
     case 'constructed':
-        PDOQuantik::initPDO($_ENV['sgbd'],$_ENV['host'],$_ENV['database'],$_ENV['user'],$_ENV['password']);
         //creer le jeu dans la base de données
     $p = $_SESSION['player'];
     $name = $p->getName();
@@ -22,23 +25,39 @@ switch ($_POST['action']) {
     PDOQuantik::createGameQuantik($name, $game->getJson());
     header('Location: ./ressourcesQuantik/quantik.php');
     break;
+    case 'initialized':
+        //initialiser le jeu
+        $gameID = $_POST['gameID'];
+        $game = PDOQuantik::getGameQuantikById($gameID);
+        PDOQuantik::addPlayerToGameQuantik($_SESSION['player']->getName(), $game->getJson(), $gameID);
+        header('Location: ./ressourcesQuantik/quantik.php');
+        break;
+
+    case 'waitingForPlayer':
+        //attendre un autre joueur
+        $_SESSION['gameID'] = $_POST['gameID'];
+        $_SESSION['etatApp'] = 'consultePartieEnCours';
+        $_SESSION['etat'] = 'choixPiece';
+        header('Location: index.php');
+
+        break;
     case 'recommencer':
         session_unset();
-        header('Location: quantik.php');
+        header('Location: index.php');
         break;
     case 'AnnulerChoixPiece':
         $_SESSION['etat'] = 'choixPiece';
         $_SESSION['piece'] = null; //on annule le choix de la pièce
         $_SESSION['QuantikGame']->currentPlayer = ($_SESSION['QuantikGame']->currentPlayer + 1) % 2;
 
-        header('Location: quantik.php');
+        header('Location: index.php');
         break;
     case 'deconnexion':
         session_start();
         session_unset(); // Supprimer toutes les variables de session
         session_destroy(); // Détruire la session
         header('HTTP/1.1 303 See Other');
-        header('Location: ./ressourcesQuantik/login.php'); // Rediriger vers la page de connexion
+        header('Location: ressourcesQuantik/login.php'); // Rediriger vers la page de connexion
         exit();
     default:
         echo AbstractUIGenerator::getPageErreur("Une erreur est survenue lors de la partie", "");
@@ -50,8 +69,7 @@ switch ($_POST['action']) {
 if (isset($_POST['piece'])) {
     $_SESSION['piece'] = $_POST['piece'];
     $_SESSION['etat'] = 'posePiece';
-
-    header('Location: quantik.php');
+    header('Location: index.php');
 }
 
 if (isset($_POST['posePiece'])) {
@@ -75,12 +93,12 @@ if (isset($_POST['posePiece'])) {
     // Vérifier si la partie est terminée après avoir posé la pièce
     if (checkVictoire()) {
         $_SESSION['etat'] = 'finPartie';
-        header('Location: quantik.php');
+        header('Location: index.php');
         exit; // Terminer le script
     }
 
     $_SESSION['etat'] = 'choixPiece';
-    header('Location: quantik.php');
+    header('Location: index.php');
 }
 
 function checkVictoire(): bool

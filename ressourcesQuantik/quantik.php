@@ -1,9 +1,10 @@
 <?php
 namespace Quantik2024;
-
+require_once '../PHP/PDOQuantik.php';
+require_once '../PHP/Player.php';
+require_once './env/db.php';
 use Exception;
 
-require_once 'PDOQuantik.php';
 session_start();
 
 if (!isset($_SESSION['player'])) {
@@ -12,6 +13,9 @@ if (!isset($_SESSION['player'])) {
     exit();
 }
 $player = $_SESSION['player'];
+PDOQuantik::initPDO($_ENV['sgbd'],$_ENV['host'],$_ENV['database'],$_ENV['user'],$_ENV['password']);
+$games = PDOQuantik::getAllGameQuantik();
+
 
 
     $page = '<!DOCTYPE html>
@@ -41,19 +45,36 @@ $player = $_SESSION['player'];
 
             $page .= '
             <li> <h3>Parties en cours</h3>
-                <form action="../traiteFormQuantik.php" method="post">
-                    
-                    <button type="submit" name="action" value="waitingForPlayer">Parties en cours</button>
-                    <input type="hidden" name="action" value="">
+                <form action="../traiteFormQuantik.php" method="post">';
+                    foreach ($games as $game) {
+                        if ($game['gamestatus'] == 'initialized') {
+                            $playerOne = PDOQuantik::selectPlayerByID($game['playerone']);
+                            $playertwo = PDOQuantik::selectPlayerByID($game['playertwo']);
+
+                            $page .= '<button type="submit" name="gameID" value="'.$game['gameid'] .'">Partie ['.$game['gameid'] . '] de '.$playerOne['name'].' en cours avec '.$playertwo['name'].'</button></br>';
+                        }
+                    }
+            $page .='<input type="hidden" name="action" value="waitingForPlayer">
 
                 </form>
-            </li>';
+        </li>';
 
     $page .= '
             <li> <h3>Parties en attente d\'un joueur </h3>
-                <form action="../traiteFormQuantik.php" method="post">
-                   
-                   <button type="submit" name="action" value="waitingForPlayer">Parties en cours</button>
+                <form action="../traiteFormQuantik.php" method="post">';
+foreach ($games as $game) {
+    if ($game['gamestatus'] == 'constructed') {
+        $player = PDOQuantik::selectPlayerByID($game['playerone']);
+        if($_SESSION['player']->getId() === $game['playerone']){
+            $page .= '<button type="submit" name="gameID" value="'.$game['gameid'] .'" disabled>Partie ['.$game['gameid'] . '] - '.$player['name'].' en attente d\'un autre joueur</button></br>';
+        }else {
+            $page .= '<button type="submit" name="gameID" value="'.$game['gameid'] .'">Partie ['.$game['gameid'] . '] - '.$player['name'].' en attente d\'un autre joueur</button></br>';
+        }
+    }
+}
+
+
+$page .= '
                     <input type="hidden" name="action" value="initialized">
 
                 </form>
