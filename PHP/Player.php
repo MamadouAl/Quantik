@@ -6,6 +6,11 @@ class Player
     public string $name;
     public int $id;
 
+    public function __construct(string $name = "", int $id = 0) {
+        $this->name = $name;
+        $this->id = $id;
+    }
+
     public function getName(): string
     {
         return $this->name;
@@ -29,4 +34,16 @@ class Player
     public function getJson():string {
         return '{"name":"'.$this->name.'","id":'.$this->id.'}';
     }
+
+    public static function initPlayer(string $json): Player {
+        $object = json_decode($json);
+        return new Player($object->name, $object->id);
+    }
 }
+
+////Test
+//$p = new Player("toto", 1);
+//echo $p->getName();
+//echo $p->getJson();
+//$p2 = Player::initPlayer($p->getJson());
+//echo $p2;

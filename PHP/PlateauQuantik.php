@@ -1,6 +1,7 @@
 <?php
 
 require_once 'ArrayPieceQuantik.php';
+require_once 'PieceQuantik.php';
 
 class PlateauQuantik {
     const NW = 0;
@@ -10,14 +11,16 @@ class PlateauQuantik {
     const NBROWS = 4;
     const NBCOLS = 4;
 
-    private $board; // Tableau représentant le plateau de jeu
+    private array $board;
 
     /**
      * Constructeur qui initialise le plateau de jeu
      */
     public function __construct() {
+        //$this->board = array();
         // Initialisez le plateau avec des instances d'ArrayPieceQuantik
         for ($i = 0; $i < self::NBROWS; $i++) {
+            $this->board[$i] = new ArrayPieceQuantik();
             for ($j = 0; $j < self::NBCOLS; $j++) {
                 $this->board[$i][$j] = PieceQuantik::initVoid();
             }
@@ -165,6 +168,21 @@ class PlateauQuantik {
         $this->board[$row][$col] = $piece;
     }
 
+    public function __toString(): string
+    {
+        $output = "<table border='1'>";
+        for ($i = 0; $i < self::NBROWS; $i++) {
+            $output .= "<tr>";
+            for ($j = 0; $j < self::NBCOLS; $j++) {
+                $output .= "<td>" . $this->board[$i][$j] . "</td>";
+            }
+            $output .= "</tr>";
+        }
+        $output .= "</table>";
+
+        return $output;
+    }
+
     /* TODO implantation schéma UML */
     public function getJson(): string {
         $json = "[";
@@ -187,3 +205,10 @@ class PlateauQuantik {
         return $pq;
     }
 }
+
+//$p = new PlateauQuantik();
+// echo $p->getJson()."\n";
+//
+//$plateau = PlateauQuantik::initPlateauQuantik($p->getJson());
+//echo $plateau;
+

@@ -4,4 +4,4 @@ $_ENV['host'] = 'localhost';
 $_ENV['database'] = 'quantik';
 $_ENV['user'] = 'root';
 $_ENV['password'] = '';
-?>
+

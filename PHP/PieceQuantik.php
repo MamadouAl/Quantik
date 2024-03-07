@@ -82,32 +82,32 @@ class PieceQuantik
         return new PieceQuantik(self::BLACK, self::CUBE);
     }
     
-    public static function initWhiteCone()
+    public static function initWhiteCone(): PieceQuantik
     {
         return new PieceQuantik(self::WHITE, self::CONE);
     }
 
-    public static function initBlackCone()
+    public static function initBlackCone(): PieceQuantik
     {
         return new PieceQuantik(self::BLACK, self::CONE);
     }
 
-    public static function initWhiteCylindre()
+    public static function initWhiteCylindre(): PieceQuantik
     {
         return new PieceQuantik(self::WHITE, self::CYLINDRE);
     }
 
-    public static function initBlackCylindre()
+    public static function initBlackCylindre(): PieceQuantik
     {
         return new PieceQuantik(self::BLACK, self::CYLINDRE);
     }
 
-    public static function initWhiteSphere()
+    public static function initWhiteSphere(): PieceQuantik
     {
         return new PieceQuantik(self::WHITE, self::SPHERE);
     }
 
-    public static function initBlackSphere()
+    public static function initBlackSphere(): PieceQuantik
     {
         return new PieceQuantik(self::BLACK, self::SPHERE);
     }
@@ -117,6 +117,7 @@ class PieceQuantik
      */
     public function __toString()
     {
+        $couleurText = '';
         if($this->couleur==self::WHITE){
             $couleurText='Wh';
         }
@@ -148,15 +149,24 @@ class PieceQuantik
 
     /* TODO implantation schéma UML */
     public function getJson(): string {
-        return '{"forme":'. $this->forme . ',"couleur":'.$this->couleur. '}';
+        if (is_null($this->forme))
+            return '{"forme":null,"couleur":'.$this->couleur. '}';
+        else
+            return '{"forme":'. $this->forme . ',"couleur":'.$this->couleur. '}';
     }
 
     public static function initPieceQuantik(string|object $json): PieceQuantik {
         if (is_string($json)) {
             $props = json_decode($json, true);
-            return new PieceQuantik($props['forme'], $props['couleur']);
+            return new PieceQuantik($props['couleur'], $props['forme']);
         }
         else
-            return new PieceQuantik($json->forme, $json->couleur);
+            return new PieceQuantik($json->couleur, $json->forme);
     }
 }
+
+
+//$piece = PieceQuantik::initWhiteCube();
+//echo $piece->getJson()."\n";
+//$test = PieceQuantik::initPieceQuantik($piece->getJson());
+//echo $test->__toString()."\n";

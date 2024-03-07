@@ -1,7 +1,8 @@
 <?php
+
 namespace Quantik2024;
 
-require_once 'PDOQuantik.php';
+
 session_start();
 function getPageLogin(): string {
 $form = '<!DOCTYPE html>
@@ -24,15 +25,15 @@ return $form;
 if (isset($_REQUEST['playerName'])) {
     // connexion à la base de données
     require_once 'env/db.php';
+    require_once '../PHP/PDOQuantik.php';
     PDOQuantik::initPDO($_ENV['sgbd'],$_ENV['host'],$_ENV['database'],$_ENV['user'],$_ENV['password']);
     $player = PDOQuantik::selectPlayerByName($_REQUEST['playerName']);
     if (is_null($player))
         $player = PDOQuantik::createPlayer($_REQUEST['playerName']);
     $_SESSION['player'] = $player;
-
+    var_dump($player);
     header('HTTP/1.1 303 See Other');
-    header('Location: index.php');
-
+    header('Location: quantik.php');
 }
 else {
 

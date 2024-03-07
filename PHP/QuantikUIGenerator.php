@@ -1,4 +1,7 @@
 <?php
+
+use Quantik2024\QuantikGame;
+
 require_once 'AbstractGame.php';
 require_once 'AbstractUIGenerator.php';
 require_once 'PlateauQuantik.php';

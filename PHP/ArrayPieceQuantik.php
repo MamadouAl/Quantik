@@ -10,7 +10,6 @@ class ArrayPieceQuantik implements ArrayAccess, Countable
      */
     public function __construct()
     {
-       // $this->pieceQuantik = array(pieceQuantik::initVoid());
         $this->pieceQuantiks = array();
     }
 
@@ -143,7 +142,6 @@ class ArrayPieceQuantik implements ArrayAccess, Countable
         return $str;
     }
 
-
     public function getJson(): string
     {
         $json = "[";
@@ -164,4 +162,11 @@ class ArrayPieceQuantik implements ArrayAccess, Countable
             $apq[] = PieceQuantik::initPieceQuantik($j);
         return $apq;
     }
+
 }
+
+//$p = ArrayPieceQuantik::initPiecesBlanches();
+//echo $p ."**********\n";
+//
+//$array = ArrayPieceQuantik::initArrayPieceQuantik($p->getJson());
+//echo $array;
