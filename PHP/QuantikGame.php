@@ -77,7 +77,7 @@ class QuantikGame extends AbstractGame
         return $qg;
     }
 
-    private function getPlayers(): array
+    public function getPlayers(): array
     {
         return $this->players;
     }

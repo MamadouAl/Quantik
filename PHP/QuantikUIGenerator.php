@@ -215,7 +215,9 @@ class QuantikUIGenerator extends AbstractUIGenerator
      * @return string
      */
     protected static function getLienRecommencer(): string {
-        return '<a href="traiteFormQuantik.php?action=recommencer">Recommencer</a>';
+        return '<form action="traiteFormQuantik.php" method="post">
+<button type="submit" name="action" value="recommencer">Recommencer</button>
+</form>';
     }
 
     /**
@@ -244,6 +246,41 @@ class QuantikUIGenerator extends AbstractUIGenerator
             $page .='</br>';
 
             $page .= self::getFormSelectionPiece($quantik->pieceWhite);
+        }
+        $page .= '</div>';
+
+        $page .= '<div class="column is-1">';
+        $page .= '</div>';
+        $page .='<div class="column is-6 mt-6">';
+        $page .= self::getDivPlateauQuantik($quantik->plateau);
+        $page .= '</div>';
+
+        $page .= '</div>';
+        $page .= '</div>';
+        $page .= self::getFinHTML();
+        return $page;
+    }
+
+    public static function getPageSelectionPieceGrisee(QuantikGame $quantik, int $couleurActive): string {
+
+        $page = self::getDebutHTML('Quantik - Sélection de pièce');
+        $page .= '<div class="container">';
+
+        $page .='<div class="columns ">';
+        $page .='<div class="column is-5 ">';
+        if($couleurActive == 1){  // si c'est au tour des noirs
+            $page .= self::getDivPiecesDisponibles($quantik->pieceBlack);
+            $page .='</br>';
+            $page .='</br>';
+            $page .='</br>';
+            $page .= self::getDivPiecesDisponibles($quantik->pieceWhite);
+        }else if($couleurActive == 0){ // si c'est au tour des blancs
+            $page .= self::getDivPiecesDisponibles($quantik->pieceBlack);
+            $page .='</br>';
+            $page .='</br>';
+            $page .='</br>';
+
+            $page .= self::getDivPiecesDisponibles($quantik->pieceWhite);
         }
         $page .= '</div>';
 
@@ -307,7 +344,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
     /**
      * Genere la page de victoire
      */
-    public static function getPageVictoire(QuantikGame $quantik, int $couleurActive, int $posSelection): string {
+    public static function getPageVictoire(QuantikGame $quantik, int $couleurActive, int $posSelection=-1): string {
         $page = self::getDebutHTML('Quantik - Victoire');
         $page .= '<div class="container">';
 

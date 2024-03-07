@@ -9,7 +9,13 @@ require_once './ressourcesQuantik/env/db.php';
 
 
 session_start();
-    // session_unset();
+//session_unset();
+if (!isset($_SESSION['player'])) {
+    header('HTTP/1.1 303 See Other');
+    header('Location: login.php');
+    exit();
+}
+//header('refresh: 2');
 
 
 //initialisation du plateau
@@ -37,12 +43,20 @@ switch ($_SESSION['etatApp']) {
         $currentPlayer = $game->currentPlayer;
 
         $couleurPlayer = $game->couleurPlayer[$currentPlayer];
+        $playerName = $game->getPlayers()[$couleurPlayer]->getName();
+        echo "<h3>C'est au joueur <b>" . $playerName . "</b> de jouer</h3>";
         echo $currentPlayer;
 
         switch ($_SESSION['etat']) {
             case "choixPiece":
-                echo QuantikUIGenerator::getPageSelectionPiece($game, $currentPlayer);
-        
+                if($game->getPlayers()[$couleurPlayer]->getId() === $_SESSION['player']->getId()){
+                    echo QuantikUIGenerator::getPageSelectionPiece($game, $currentPlayer);
+                }
+                else{
+                    echo QuantikUIGenerator::getPageSelectionPieceGrisee($game, $currentPlayer);
+                }
+               // echo QuantikUIGenerator::getPageSelectionPiece($game, $currentPlayer);
+
                 break;
             case "posePiece":
                 echo QuantikUIGenerator::getPagePosePiece($game, $currentPlayer, $_SESSION['piece']);
@@ -51,14 +65,23 @@ switch ($_SESSION['etatApp']) {
                 break;
             }
         break;
-    case 'consultePartieVictoire':
-        echo "<h1>Partie terminée</h1>";
+    case 'Victoire':
+        if($_SESSION['etat'] == 'consultePartieVictoire'){
+            echo "<h1>Victoire</h1>";
+            $gameID = $_SESSION['gameID'];
+            $game = PDOQuantik::getGameQuantikById($gameID);
+            $currentPlayer = $game->currentPlayer;
+            $couleurPlayer = $game->couleurPlayer[$currentPlayer];
+            $playerName = $game->getPlayers()[$couleurPlayer]->getName();
+            echo "<h3>Le joueur <b>" . $playerName . "</b> a gagné</h3>";
+            echo QuantikUIGenerator::getPageVictoire($game, $currentPlayer);
+        }
         break;
     case 'home':
-        echo "<h1>Bienvenue sur Home</h1>";
+        header('Location: /ressourcesQuantik/quantik.php');
         break;
     default:
-    echo "<h1>Erreur</h1>";
+           echo AbstractUIGenerator::getPageErreur("Une erreur est survenue lors de la partie","");
     break;
 }
 

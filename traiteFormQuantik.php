@@ -44,6 +44,7 @@ if (isset($_POST['posePiece'])) {
         $_SESSION['actionQ']->posePiece($pos[0], $pos[1], $piece);
         $game->pieceBlack->setPieceQuantiks($_SESSION['piece'], PieceQuantik::initVoid());
         $game->currentPlayer = ($game->currentPlayer + 1) % 2;
+
         PDOQuantik::saveGameQuantik("waitingForPlayer", $game->getJson(),$gameID);
     }
         /*
@@ -60,7 +61,10 @@ if (isset($_POST['posePiece'])) {
 
     // Vérifier si la partie est terminée après avoir posé la pièce
     if (checkVictoire()) {
-        $_SESSION['etat'] = 'finPartie';
+        $_SESSION['etat'] = 'consultePartieVictoire';
+        $_SESSION['etatApp'] = 'Victoire';
+        PDOQuantik::saveGameQuantik("finished", $game->getJson(),$gameID);
+
         header('Location: index.php');
         exit; // Terminer le script
     }
@@ -96,15 +100,24 @@ else
             header('Location: index.php');
 
             break;
+        case 'finished':
+            //partie terminée
+            $_SESSION['gameID'] = $_POST['gameID'];
+            $_SESSION['etatApp'] = 'Victoire';
+            $_SESSION['etat'] = 'consultePartieVictoire';
+            header('Location: index.php');
+            break;
+
         case 'recommencer':
-            session_unset();
+            //session_unset();
+            $_SESSION['etatApp'] = 'home';
             header('Location: index.php');
             break;
         case 'AnnulerChoixPiece':
+            $game = PDOQuantik::getGameQuantikById($_SESSION['gameID']);
             $_SESSION['etat'] = 'choixPiece';
             $_SESSION['piece'] = null; //on annule le choix de la pièce
-            $_SESSION['QuantikGame']->currentPlayer = ($_SESSION['QuantikGame']->currentPlayer + 1) % 2;
-
+            $game->currentPlayer = ($game->currentPlayer + 1) % 2;
             header('Location: index.php');
             break;
         case 'deconnexion':

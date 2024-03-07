@@ -66,7 +66,7 @@ foreach ($games as $game) {
     if ($game['gamestatus'] == 'constructed') {
         $player = PDOQuantik::selectPlayerByID($game['playerone']);
         if($_SESSION['player']->getId() === $game['playerone']){
-            $page .= '<button type="submit" name="gameID" value="'.$game['gameid'] .'" disabled>Partie ['.$game['gameid'] . '] - '.$player['name'].' en attente d\'un autre joueur</button></br>';
+            $page .= '<button type="submit" name="gameID" value="'.$game['gameid'] .'" disabled >Partie ['.$game['gameid'] . '] - '.$player['name'].' en attente d\'un autre joueur</button></br>';
         }else {
             $page .= '<button type="submit" name="gameID" value="'.$game['gameid'] .'">Partie ['.$game['gameid'] . '] - '.$player['name'].' en attente d\'un autre joueur</button></br>';
         }
@@ -82,11 +82,18 @@ $page .= '
 
     $page .= '
             <li><h3>Parties terminées</h3>
-                <form action="../traiteFormQuantik.php" method="post">
+                <form action="../traiteFormQuantik.php" method="post">';
+                foreach ($games as $game) {
+                    if ($game['gamestatus'] == 'finished') {
+                        $playerOne = PDOQuantik::selectPlayerByID($game['playerone']);
+                        $playertwo = PDOQuantik::selectPlayerByID($game['playertwo']);
+                        $page .= '<button type="submit" name="gameID" value="'.$game['gameid'] .'">Partie ['.$game['gameid'] . '] de '.$playerOne['name'].' terminée avec '.$playertwo['name'].'</button></br>';
+                    }
+                }
+    $page .= '
                     <input type="hidden" name="action" value="finished">
-                    <input type="submit" value="Parties terminées">
                 </form>
-            </li></br>';
+            </li>';
 
     $page .= '
             <li>
