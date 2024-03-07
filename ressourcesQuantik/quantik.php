@@ -47,11 +47,11 @@ $games = PDOQuantik::getAllGameQuantik();
             <li> <h3>Parties en cours</h3>
                 <form action="../traiteFormQuantik.php" method="post">';
                     foreach ($games as $game) {
-                        if ($game['gameStatus'] == 'initialized') {
-                            $playerOne = PDOQuantik::selectPlayerByID($game['playerOne']);
-                            $playertwo = PDOQuantik::selectPlayerByID($game['playerTwo']);
+                        if ($game['gamestatus'] == 'initialized') {
+                            $playerOne = PDOQuantik::selectPlayerByID($game['playerone']);
+                            $playertwo = PDOQuantik::selectPlayerByID($game['playertwo']);
 
-                            $page .= '<button type="submit" name="gameID" value="'.$game['gameId'] .'">Partie ['.$game['gameId'] . '] de '.$playerOne['name'].' en cours avec '.$playertwo['name'].'</button></br>';
+                            $page .= '<button type="submit" name="gameID" value="'.$game['gameid'] .'">Partie ['.$game['gameid'] . '] de '.$playerOne['name'].' en cours avec '.$playertwo['name'].'</button></br>';
                         }
                     }
             $page .='<input type="hidden" name="action" value="waitingForPlayer">
@@ -63,12 +63,12 @@ $games = PDOQuantik::getAllGameQuantik();
             <li> <h3>Parties en attente d\'un joueur </h3>
                 <form action="../traiteFormQuantik.php" method="post">';
 foreach ($games as $game) {
-    if ($game['gameStatus'] == 'constructed') {
-        $player = PDOQuantik::selectPlayerByID($game['playerOne']);
-        if($_SESSION['player']->getId() === $game['playerOne']){
-            $page .= '<button type="submit" name="gameID" value="'.$game['gameId'] .'" disabled>Partie ['.$game['gameId'] . '] - '.$player['name'].' en attente d\'un autre joueur</button></br>';
+    if ($game['gamestatus'] == 'constructed') {
+        $player = PDOQuantik::selectPlayerByID($game['playerone']);
+        if($_SESSION['player']->getId() === $game['playerone']){
+            $page .= '<button type="submit" name="gameID" value="'.$game['gameid'] .'" disabled>Partie ['.$game['gameid'] . '] - '.$player['name'].' en attente d\'un autre joueur</button></br>';
         }else {
-            $page .= '<button type="submit" name="gameID" value="'.$game['gameId'] .'">Partie ['.$game['gameId'] . '] - '.$player['name'].' en attente d\'un autre joueur</button></br>';
+            $page .= '<button type="submit" name="gameID" value="'.$game['gameid'] .'">Partie ['.$game['gameid'] . '] - '.$player['name'].' en attente d\'un autre joueur</button></br>';
         }
     }
 }

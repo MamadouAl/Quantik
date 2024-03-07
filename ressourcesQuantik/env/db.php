@@ -1,7 +1,7 @@
 <?php
-$_ENV['sgbd'] = 'mysql';
+$_ENV['sgbd'] = 'pgsql';
 $_ENV['host'] = 'localhost';
-$_ENV['database'] = 'quantik';
-$_ENV['user'] = 'root';
-$_ENV['password'] = '';
+$_ENV['database'] = 'dm213333';
+$_ENV['user'] = 'dm213333';
+$_ENV['password'] = '20213333';
 
