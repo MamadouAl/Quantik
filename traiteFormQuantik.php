@@ -76,6 +76,7 @@ switch ($_POST['action']) {
         //initialiser le jeu
         $gameID = $_POST['gameID'];
         $game = PDOQuantik::getGameQuantikById($gameID);
+        $game->setJesonPlayerTwo($_SESSION['player']->getJson());
         PDOQuantik::addPlayerToGameQuantik($_SESSION['player']->getName(), $game->getJson(), $gameID);
         header('Location: ./ressourcesQuantik/quantik.php');
         break;
