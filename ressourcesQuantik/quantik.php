@@ -47,7 +47,7 @@ $games = PDOQuantik::getAllGameQuantik();
             <li> <h3>Parties en cours</h3>
                 <form action="../traiteFormQuantik.php" method="post">';
                     foreach ($games as $game) {
-                        if ($game['gamestatus'] == 'initialized') {
+                        if ($game['gamestatus'] == 'initialized' || $game['gamestatus'] == 'waitingForPlayer') {
                             $playerOne = PDOQuantik::selectPlayerByID($game['playerone']);
                             $playertwo = PDOQuantik::selectPlayerByID($game['playertwo']);
 

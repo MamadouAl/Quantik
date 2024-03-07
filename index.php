@@ -35,8 +35,9 @@ switch ($_SESSION['etatApp']) {
         $game = PDOQuantik::getGameQuantikById($gameID);
         // var_dump($game);
         $currentPlayer = $game->currentPlayer;
+
         $couleurPlayer = $game->couleurPlayer[$currentPlayer];
-        echo $couleurPlayer;
+        echo $currentPlayer;
 
         switch ($_SESSION['etat']) {
             case "choixPiece":
@@ -46,7 +47,7 @@ switch ($_SESSION['etatApp']) {
             case "posePiece":
                 echo QuantikUIGenerator::getPagePosePiece($game, $currentPlayer, $_SESSION['piece']);
         
-                // $_SESSION['QuantikGame']->currentPlayer = ($currentPlayer + 1) % 2;
+                $game->currentPlayer = ($currentPlayer + 1) % 2;
                 break;
             }
         break;

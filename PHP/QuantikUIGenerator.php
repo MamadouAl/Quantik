@@ -231,13 +231,13 @@ class QuantikUIGenerator extends AbstractUIGenerator
 
         $page .='<div class="columns ">';
         $page .='<div class="column is-5 ">';
-        if($couleurActive == 0){  // si c'est au tour des noirs
+        if($couleurActive == 1){  // si c'est au tour des noirs
             $page .= self::getFormSelectionPiece($quantik->pieceBlack);
             $page .='</br>';
             $page .='</br>';
             $page .='</br>';
             $page .= self::getDivPiecesDisponibles($quantik->pieceWhite);
-        }else if($couleurActive == 1){ // si c'est au tour des blancs
+        }else if($couleurActive == 0){ // si c'est au tour des blancs
             $page .= self::getDivPiecesDisponibles($quantik->pieceBlack);
             $page .='</br>';
             $page .='</br>';
@@ -268,7 +268,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
         $page .='<div class="columns">';
         $page .='<div class="column is-5">';
 
-        if($couleurActive==0){
+        if($couleurActive==1){
             $page .= self::getDivPiecesDisponibles($quantik->pieceBlack, $posSelection);
             $page .= '</br>';
             $page .= '</br>';
@@ -280,7 +280,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
             $page .='<div class="column is-6 mt-6">';
             $page .= self::getFormPlateauQuantik($quantik->plateau, $quantik->pieceBlack->getPieceQuantiks($posSelection));
             $page .= '</div>';
-        }else if($couleurActive==1){
+        }else if($couleurActive==0){
             $page .= self::getDivPiecesDisponibles($quantik->pieceBlack);
             $page .= '</br>';
             $page .= '</br>';

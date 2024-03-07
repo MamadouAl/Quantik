@@ -22,7 +22,7 @@ if(isset($_POST['piece'])){
     $_SESSION['piece'] = $_POST['piece'];
     $_SESSION['etat'] = 'posePiece';
     header('Location: index.php');
-}
+}else
 if (isset($_POST['posePiece'])) {
     $pos = explode(',', $_POST['posePiece']); //on récupère les coordonnées
     $gameID = $_SESSION['gameID'];
@@ -32,13 +32,24 @@ if (isset($_POST['posePiece'])) {
         $piece = $game->pieceWhite->getPieceQuantiks($_SESSION['piece']);
         $_SESSION['actionQ'] = new ActionQuantik($game->plateau);
         $_SESSION['actionQ']->posePiece($pos[0], $pos[1], $piece);
-        echo  $game->getJson();
+        //echo  $game->getJson();
+        $game->pieceWhite->setPieceQuantiks($_SESSION['piece'], PieceQuantik::initVoid());
+        $game->currentPlayer = ($game->currentPlayer + 1) % 2;
+       // echo $game->couleurPlayer[1];
         PDOQuantik::saveGameQuantik("waitingForPlayer", $game->getJson(),$gameID);
 
-    }else{
-        $piece = $_SESSION['QuantikGame']->pieceBlack->getPieceQuantiks($_SESSION['piece']);
+    }else if ($game->currentPlayer == 1){
+        $piece = $game->pieceBlack->getPieceQuantiks($_SESSION['piece']);
+        $_SESSION['actionQ'] = new ActionQuantik($game->plateau);
         $_SESSION['actionQ']->posePiece($pos[0], $pos[1], $piece);
+        $game->pieceBlack->setPieceQuantiks($_SESSION['piece'], PieceQuantik::initVoid());
+        $game->currentPlayer = ($game->currentPlayer + 1) % 2;
+        PDOQuantik::saveGameQuantik("waitingForPlayer", $game->getJson(),$gameID);
     }
+        /*
+        $piece = $game->pieceBlack->getPieceQuantiks($_SESSION['piece']);
+        $_SESSION['actionQ']->posePiece($pos[0], $pos[1], $piece);*/
+
     //mettre une pièce vide à la place de la pièce choisie
     // if($_SESSION['QuantikGame']->currentPlayer == 0) {
     //     $_SESSION['QuantikGame']->pieceWhite->setPieceQuantiks($_SESSION['piece'], PieceQuantik::initVoid());
@@ -57,60 +68,56 @@ if (isset($_POST['posePiece'])) {
     $_SESSION['etat'] = 'choixPiece';
     header('Location: index.php');
 }
+else
 
-// if (isset($_POST['piece'])) {
-//     $_SESSION['piece'] = $_POST['piece'];
-//     $_SESSION['etat'] = 'posePiece';
-//     header('Location: index.php');
-// }
-switch ($_POST['action']) {
-    case 'constructed':
-        //creer le jeu dans la base de données
-    $p = $_SESSION['player'];
-    $name = $p->getName();
-    $game = new QuantikGame([$p]);
-    PDOQuantik::createGameQuantik($name, $game->getJson());
-    header('Location: ./ressourcesQuantik/quantik.php');
-    break;
-    case 'initialized':
-        //initialiser le jeu
-        $gameID = $_POST['gameID'];
-        $game = PDOQuantik::getGameQuantikById($gameID);
-        $game->setJesonPlayerTwo($_SESSION['player']->getJson());
-        PDOQuantik::addPlayerToGameQuantik($_SESSION['player']->getName(), $game->getJson(), $gameID);
+    switch ($_POST['action']) {
+        case 'constructed':
+            //creer le jeu dans la base de données
+        $p = $_SESSION['player'];
+        $name = $p->getName();
+        $game = new QuantikGame([$p]);
+        PDOQuantik::createGameQuantik($name, $game->getJson());
         header('Location: ./ressourcesQuantik/quantik.php');
         break;
+        case 'initialized':
+            //initialiser le jeu
+            $gameID = $_POST['gameID'];
+            $game = PDOQuantik::getGameQuantikById($gameID);
+            $game->setJesonPlayerTwo($_SESSION['player']->getJson());
+            PDOQuantik::addPlayerToGameQuantik($_SESSION['player']->getName(), $game->getJson(), $gameID);
+            header('Location: ./ressourcesQuantik/quantik.php');
+            break;
 
-    case 'waitingForPlayer':
-        //attendre un autre joueur
-        $_SESSION['gameID'] = $_POST['gameID'];
-        $_SESSION['etatApp'] = 'consultePartieEnCours';
-        $_SESSION['etat'] = 'choixPiece';
-        header('Location: index.php');
+        case 'waitingForPlayer':
+            //attendre un autre joueur
+            $_SESSION['gameID'] = $_POST['gameID'];
+            $_SESSION['etatApp'] = 'consultePartieEnCours';
+            $_SESSION['etat'] = 'choixPiece';
+            header('Location: index.php');
 
-        break;
-    case 'recommencer':
-        session_unset();
-        header('Location: index.php');
-        break;
-    case 'AnnulerChoixPiece':
-        $_SESSION['etat'] = 'choixPiece';
-        $_SESSION['piece'] = null; //on annule le choix de la pièce
-        $_SESSION['QuantikGame']->currentPlayer = ($_SESSION['QuantikGame']->currentPlayer + 1) % 2;
+            break;
+        case 'recommencer':
+            session_unset();
+            header('Location: index.php');
+            break;
+        case 'AnnulerChoixPiece':
+            $_SESSION['etat'] = 'choixPiece';
+            $_SESSION['piece'] = null; //on annule le choix de la pièce
+            $_SESSION['QuantikGame']->currentPlayer = ($_SESSION['QuantikGame']->currentPlayer + 1) % 2;
 
-        header('Location: index.php');
-        break;
-    case 'deconnexion':
-        session_start();
-        session_unset(); // Supprimer toutes les variables de session
-        session_destroy(); // Détruire la session
-        header('HTTP/1.1 303 See Other');
-        header('Location: ressourcesQuantik/login.php'); // Rediriger vers la page de connexion
-        exit();
-    default:
-       
-        break;
-}
+            header('Location: index.php');
+            break;
+        case 'deconnexion':
+            session_start();
+            session_unset(); // Supprimer toutes les variables de session
+            session_destroy(); // Détruire la session
+            header('HTTP/1.1 303 See Other');
+            header('Location: ressourcesQuantik/login.php'); // Rediriger vers la page de connexion
+            exit();
+        default:
+
+            break;
+    }
 
 
 
