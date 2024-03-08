@@ -72,7 +72,7 @@ if (isset($_POST['posePiece'])) {
     $_SESSION['etat'] = 'choixPiece';
     header('Location: index.php');
 }
-else
+else{
 
     switch ($_POST['action']) {
         case 'constructed':
@@ -131,7 +131,7 @@ else
 
             break;
     }
-
+}
 
 
 

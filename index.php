@@ -36,7 +36,6 @@ PDOQuantik::initPDO($_ENV['sgbd'],$_ENV['host'],$_ENV['database'],$_ENV['user'],
 
 switch ($_SESSION['etatApp']) {
     case 'consultePartieEnCours':
-        echo "<h1>Partie en cours</h1>";
         $gameID = $_SESSION['gameID'];
         $game = PDOQuantik::getGameQuantikById($gameID);
         // var_dump($game);
@@ -44,18 +43,18 @@ switch ($_SESSION['etatApp']) {
 
         $couleurPlayer = $game->couleurPlayer[$currentPlayer];
         $playerName = $game->getPlayers()[$couleurPlayer]->getName();
-        echo "<h3>C'est au joueur <b>" . $playerName . "</b> de jouer</h3>";
+       
         echo $currentPlayer;
 
         switch ($_SESSION['etat'] ) {
             case "choixPiece":
-                if($game->getPlayers()[$couleurPlayer]->getId() === $_SESSION['player']->getId()){
-                    echo QuantikUIGenerator::getPageSelectionPiece($game, $currentPlayer);
-                }
-                else{
-                    echo QuantikUIGenerator::getPageSelectionPieceGrisee($game, $currentPlayer);
-                }
-               
+                
+                    if($game->getPlayers()[$couleurPlayer]->getId() === $_SESSION['player']->getId()){
+                        echo QuantikUIGenerator::getPageSelectionPiece($game, $currentPlayer);
+                    }
+                    else{
+                        echo QuantikUIGenerator::getPageSelectionPieceGrisee($game, $currentPlayer);
+                    }
                // echo QuantikUIGenerator::getPageSelectionPiece($game, $currentPlayer);
 
                 break;
@@ -75,6 +74,7 @@ switch ($_SESSION['etatApp']) {
             $couleurPlayer = $game->couleurPlayer[$currentPlayer];
             $playerName = $game->getPlayers()[$couleurPlayer]->getName();
             echo "<h3>Le joueur <b>" . $playerName . "</b> a gagné</h3>";
+
             echo QuantikUIGenerator::getPageVictoire($game, $currentPlayer);
         }
         break;
