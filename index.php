@@ -47,7 +47,7 @@ switch ($_SESSION['etatApp']) {
         echo "<h3>C'est au joueur <b>" . $playerName . "</b> de jouer</h3>";
         echo $currentPlayer;
 
-        switch ($_SESSION['etat']) {
+        switch ($_SESSION['etat'] ) {
             case "choixPiece":
                 if($game->getPlayers()[$couleurPlayer]->getId() === $_SESSION['player']->getId()){
                     echo QuantikUIGenerator::getPageSelectionPiece($game, $currentPlayer);
@@ -55,6 +55,7 @@ switch ($_SESSION['etatApp']) {
                 else{
                     echo QuantikUIGenerator::getPageSelectionPieceGrisee($game, $currentPlayer);
                 }
+               
                // echo QuantikUIGenerator::getPageSelectionPiece($game, $currentPlayer);
 
                 break;

@@ -12,100 +12,90 @@ if (!isset($_SESSION['player'])) {
     header('Location: login.php');
     exit();
 }
+
 $player = $_SESSION['player'];
 PDOQuantik::initPDO($_ENV['sgbd'],$_ENV['host'],$_ENV['database'],$_ENV['user'],$_ENV['password']);
 $games = PDOQuantik::getAllGameQuantik();
 
+$page = '<!DOCTYPE html>
+<html class="no-js" lang="fr" dir="ltr" style="background-color: #cac5c5;">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="Author" content="Dominique Fournier" />
+    <link rel="stylesheet" href="quantik.css" />
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <title>Salle de jeux Quantik</title>
+</head>
+<body>
+    <section class="section">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-half">
+                    <div class="quantik has-text-centered">
+                        <h1 class="title">Bienvenue -: <i>' . $player->getName() . '</i></h1>
+                        <h2 class="subtitle">Options disponibles :</h2>
+                        <ul class="has-text-centered">';
+                            $page .= '<li>
+                                <form action="../traiteFormQuantik.php" method="post">
+                                    <input type="hidden" name="action" value="constructed">
+                                    <button class="button is-primary" type="submit">Initier une nouvelle partie</button>
+                                </form>
+                            </li>';
+                            $page .= '<li>
+                                <h3 class="has-text-centered">Parties en cours</h3>
+                                <form action="../traiteFormQuantik.php" method="post">';
+                                foreach ($games as $game) {
+                                    if ($game['gameStatus'] == 'initialized' || $game['gameStatus'] == 'waitingForPlayer') {
+                                        $playerOne = PDOQuantik::selectPlayerByID($game['playerOne']);
+                                        $playerTwo = PDOQuantik::selectPlayerByID($game['playerTwo']);
 
+                                        $page .= '<button class="button" type="submit" name="gameID" value="'.$game['gameId'] .'">Partie ['.$game['gameId'] . '] de '.$playerOne['name'].' en cours avec '.$playerTwo['name'].'</button><br>';
+                                    }
+                                }
+                                $page .= '<input type="hidden" name="action" value="waitingForPlayer"></form></li>';
 
-    $page = '<!DOCTYPE html>
-    <html class="no-js" lang="fr" dir="ltr">
-      <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="Author" content="Dominique Fournier" />
-        <link rel="stylesheet" href="quantik.css" />
-        <title>Salle de jeux Quantik</title>
-      </head>
-      <body>';
+                            $page .= '<li>
+                                <h3 class="has-text-centered">Parties en attente d\'un joueur</h3>
+                                <form action="../traiteFormQuantik.php" method="post">';
+                                foreach ($games as $game) {
+                                    if ($game['gameStatus'] == 'constructed') {
+                                        $playerOne = PDOQuantik::selectPlayerByID($game['playerOne']);
+                                        $disabled = ($_SESSION['player']->getId() === $game['playerOne']) ? 'disabled' : '';
 
-    $page .= '
-<div class="quantik">
-          <h1>Bienvenue -: <i>' . $player->getName() . '</i></h1>
+                                        $page .= '<button class="button" type="submit" name="gameID" value="'.$game['gameId'] .'" '.$disabled.'>Partie ['.$game['gameId'] . '] - '.$playerOne['name'].' en attente d\'un autre joueur</button><br>';
+                                    }
+                                }
+                                $page .= '<input type="hidden" name="action" value="initialized"></form></li>';
 
-          <h2>Options disponibles :</h2>
-          <ul>
-            <li>
-              <form action="../traiteFormQuantik.php" method="post">
-              
-                <input type="hidden" name="action" value="constructed">
-                <input type="submit" value="Initier une nouvelle partie">
-              </form>
-            </li>';
+                            $page .= '<li>
+                                <h3 class="has-text-centered">Parties terminées</h3>
+                                <form action="../traiteFormQuantik.php" method="post">';
+                                foreach ($games as $game) {
+                                    if ($game['gameStatus'] == 'finished') {
+                                        $playerOne = PDOQuantik::selectPlayerByID($game['playerOne']);
+                                        $playerTwo = PDOQuantik::selectPlayerByID($game['playerTwo']);
 
-            $page .= '
-            <li> <h3>Parties en cours</h3>
-                <form action="../traiteFormQuantik.php" method="post">';
-                    foreach ($games as $game) {
-                        if ($game['gamestatus'] == 'initialized' || $game['gamestatus'] == 'waitingForPlayer') {
-                            $playerOne = PDOQuantik::selectPlayerByID($game['playerone']);
-                            $playertwo = PDOQuantik::selectPlayerByID($game['playertwo']);
+                                        $page .= '<button class="button" type="submit" name="gameID" value="'.$game['gameId'] .'">Partie ['.$game['gameId'] . '] de '.$playerOne['name'].' terminée avec '.$playerTwo['name'].'</button><br>';
+                                    }
+                                }
+                                $page .= '<input type="hidden" name="action" value="finished"></form></li>';
 
-                            $page .= '<button type="submit" name="gameID" value="'.$game['gameid'] .'">Partie ['.$game['gameid'] . '] de '.$playerOne['name'].' en cours avec '.$playertwo['name'].'</button></br>';
-                        }
-                    }
-            $page .='<input type="hidden" name="action" value="waitingForPlayer">
-
-                </form>
-        </li>';
-
-    $page .= '
-            <li> <h3>Parties en attente d\'un joueur </h3>
-                <form action="../traiteFormQuantik.php" method="post">';
-foreach ($games as $game) {
-    if ($game['gamestatus'] == 'constructed') {
-        $player = PDOQuantik::selectPlayerByID($game['playerone']);
-        if($_SESSION['player']->getId() === $game['playerone']){
-            $page .= '<button type="submit" name="gameID" value="'.$game['gameid'] .'" disabled >Partie ['.$game['gameid'] . '] - '.$player['name'].' en attente d\'un autre joueur</button></br>';
-        }else {
-            $page .= '<button type="submit" name="gameID" value="'.$game['gameid'] .'">Partie ['.$game['gameid'] . '] - '.$player['name'].' en attente d\'un autre joueur</button></br>';
-        }
-    }
-}
-
-
-$page .= '
-                    <input type="hidden" name="action" value="initialized">
-
-                </form>
-            </li>';
-
-    $page .= '
-            <li><h3>Parties terminées</h3>
-                <form action="../traiteFormQuantik.php" method="post">';
-                foreach ($games as $game) {
-                    if ($game['gamestatus'] == 'finished') {
-                        $playerOne = PDOQuantik::selectPlayerByID($game['playerone']);
-                        $playertwo = PDOQuantik::selectPlayerByID($game['playertwo']);
-                        $page .= '<button type="submit" name="gameID" value="'.$game['gameid'] .'">Partie ['.$game['gameid'] . '] de '.$playerOne['name'].' terminée avec '.$playertwo['name'].'</button></br>';
-                    }
-                }
-    $page .= '
-                    <input type="hidden" name="action" value="finished">
-                </form>
-            </li>';
-
-    $page .= '
-            <li>
-                <form action="../traiteFormQuantik.php" method="post">
-                    <input type="hidden" name="action" value="deconnexion">
-                    <input type="submit" value="Déconnexion">
-                </form>
-</li>
-          </ul>
-          <!-- Afficher la section des parties en cours -->
+                            $page .= '<li>
+                                <form action="../traiteFormQuantik.php" method="post">
+                                    <input type="hidden" name="action" value="deconnexion">
+                                    <button class="button is-danger" type="submit">Déconnexion</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-      </body>
-    </html>';
+    </section>
+</body>
+</html>';
 
-    echo $page;
+echo $page;
+?>
