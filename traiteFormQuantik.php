@@ -134,10 +134,6 @@ else{
     }
 }
 
-
-
-
-
 function checkVictoire(): bool
 {
     $actionQ = $_SESSION['actionQ'];

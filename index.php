@@ -51,12 +51,20 @@ switch ($_SESSION['etatApp']) {
                 // var_dump($game->gameStatus);
                 if($game->gameStatus != "finished"){
                     if($game->getPlayers()[$couleurPlayer]->getId() === $_SESSION['player']->getId()){
+                       
                         echo QuantikUIGenerator::getPageSelectionPiece($game, $currentPlayer);
                     }
                     else{
+                        
                         echo QuantikUIGenerator::getPageSelectionPieceGrisee($game, $currentPlayer);
                     }
                 }else{
+                    echo "<h1>Victoiree</h1>";
+                    $currentPlayer = ($game->currentPlayer + 1) % 2;
+                    $couleurPlayer = $game->couleurPlayer[$currentPlayer];
+                    $playerName = $game->getPlayers()[$couleurPlayer]->getName();
+                    $playerName = $game->getPlayers()[$couleurPlayer]->getName();
+                    echo "<h3>Le joueur <b>" . $playerName . "</b> a gagné</h3>";
                     echo QuantikUIGenerator::getPageVictoire($game, $currentPlayer);
                 }
                // echo QuantikUIGenerator::getPageSelectionPiece($game, $currentPlayer);
@@ -79,7 +87,6 @@ switch ($_SESSION['etatApp']) {
             $couleurPlayer = $game->couleurPlayer[$currentPlayer];
             $playerName = $game->getPlayers()[$couleurPlayer]->getName();
             echo "<h3>Le joueur <b>" . $playerName . "</b> a gagné</h3>";
-            // $_SESSION['action']="finished";
             echo QuantikUIGenerator::getPageVictoire($game, $currentPlayer);
         }
         break;
