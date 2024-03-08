@@ -86,7 +86,10 @@ class QuantikGame extends AbstractGame
     {
         $this->players[1] = Player::initPlayer($json);
     }
-
+    public function setGameStatus(string $status): void
+    {
+        $this->gameStatus = $status;
+    }
 
 }
 //

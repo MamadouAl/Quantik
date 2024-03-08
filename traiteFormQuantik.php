@@ -63,6 +63,7 @@ if (isset($_POST['posePiece'])) {
     if (checkVictoire()) {
         $_SESSION['etat'] = 'consultePartieVictoire';
         $_SESSION['etatApp'] = 'Victoire';
+        $game->setGameStatus('finished');
         PDOQuantik::saveGameQuantik("finished", $game->getJson(),$gameID);
 
         header('Location: index.php');
