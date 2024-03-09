@@ -30,7 +30,6 @@ $page = '<!DOCTYPE html>
 </head>
 <body>
     <section class="section">
-        <div class="container">
             <div class="columns is-centered">
                 <div class="column is-half">
                     <div class="quantik has-text-centered">
@@ -94,6 +93,7 @@ $page = '<!DOCTYPE html>
             </div>
         </div>
     </section>
+    
 </body>
 </html>';
 

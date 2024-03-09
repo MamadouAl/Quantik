@@ -44,14 +44,15 @@ switch ($_SESSION['etatApp']) {
         $couleurPlayer = $game->couleurPlayer[$currentPlayer];
         $playerName = $game->getPlayers()[$couleurPlayer]->getName();
        
-        echo $currentPlayer;
+        // echo $currentPlayer;
 
         switch ($_SESSION['etat'] ) {
             case "choixPiece":
                 // var_dump($game->gameStatus);
                 if($game->gameStatus != "finished"){
+                    echo "c'est a ".$game->getPlayers()[$couleurPlayer]->getName()." de jouer ";
                     if($game->getPlayers()[$couleurPlayer]->getId() === $_SESSION['player']->getId()){
-                       
+                      
                         echo QuantikUIGenerator::getPageSelectionPiece($game, $currentPlayer);
                     }
                     else{

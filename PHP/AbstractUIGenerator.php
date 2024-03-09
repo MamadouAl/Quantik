@@ -13,6 +13,7 @@ class AbstractUIGenerator
         <html lang=\"fr\">
         <head>
             <meta charset=\"UTF-8\">
+            
             <title>'.$title.'</title>
             <link rel="stylesheet" href="./css/style.css">
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
