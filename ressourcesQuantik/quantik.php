@@ -34,7 +34,7 @@ $page = '<!DOCTYPE html>
                 <div class="column is-half">
                     <div class="quantik has-text-centered">
                         <h1 class="title">Bienvenue -: <i>' . $player->getName() . '</i></h1>
-                        <h2 class="subtitle">Options disponibles :</h2>
+                        <h1 class="subtitle is-3">Options disponibles :</h1>
                         <ul class="has-text-centered">';
                             $page .= '<li>
                                 <form action="../traiteFormQuantik.php" method="post">
@@ -43,20 +43,24 @@ $page = '<!DOCTYPE html>
                                 </form>
                             </li>';
                             $page .= '<li>
-                                <h3 class="has-text-centered">Parties en cours</h3>
+                                <h1 class="has-text-centered is-size-4 has-text-weight-bold">Parties en cours</h1>
                                 <form action="../traiteFormQuantik.php" method="post">';
                                 foreach ($games as $game) {
                                     if ($game['gameStatus'] == 'initialized' || $game['gameStatus'] == 'waitingForPlayer') {
+                                        
                                         $playerOne = PDOQuantik::selectPlayerByID($game['playerOne']);
                                         $playerTwo = PDOQuantik::selectPlayerByID($game['playerTwo']);
+                                        if($playerOne['name']==$player->getName() || $playerTwo['name']==$player->getName()){
+                                            $page .= '<button class="button" type="submit" name="gameID" value="'.$game['gameId'] .'">Partie ['.$game['gameId'] . '] de '.$playerOne['name'].' en cours avec '.$playerTwo['name'].'</button><br>';
+                                        }
 
-                                        $page .= '<button class="button" type="submit" name="gameID" value="'.$game['gameId'] .'">Partie ['.$game['gameId'] . '] de '.$playerOne['name'].' en cours avec '.$playerTwo['name'].'</button><br>';
+                                       
                                     }
                                 }
                                 $page .= '<input type="hidden" name="action" value="waitingForPlayer"></form></li>';
 
                             $page .= '<li>
-                                <h3 class="has-text-centered">Parties en attente d\'un joueur</h3>
+                                <h3 class="has-text-centered is-size-4 has-text-weight-bold">Parties en attente d\'un joueur</h3>
                                 <form action="../traiteFormQuantik.php" method="post">';
                                 foreach ($games as $game) {
                                     if ($game['gameStatus'] == 'constructed') {
@@ -69,14 +73,15 @@ $page = '<!DOCTYPE html>
                                 $page .= '<input type="hidden" name="action" value="initialized"></form></li>';
 
                             $page .= '<li>
-                                <h3 class="has-text-centered">Parties terminées</h3>
+                                <h3 class="has-text-centered is-size-4 has-text-weight-bold">Parties terminées</h3>
                                 <form action="../traiteFormQuantik.php" method="post">';
                                 foreach ($games as $game) {
                                     if ($game['gameStatus'] == 'finished') {
                                         $playerOne = PDOQuantik::selectPlayerByID($game['playerOne']);
                                         $playerTwo = PDOQuantik::selectPlayerByID($game['playerTwo']);
-
-                                        $page .= '<button class="button" type="submit" name="gameID" value="'.$game['gameId'] .'">Partie ['.$game['gameId'] . '] de '.$playerOne['name'].' terminée avec '.$playerTwo['name'].'</button><br>';
+                                        if($playerOne['name']==$player->getName() || $playerTwo['name']==$player->getName()){
+                                            $page .= '<button class="button" type="submit" name="gameID" value="'.$game['gameId'] .'">Partie ['.$game['gameId'] . '] de '.$playerOne['name'].' terminée avec '.$playerTwo['name'].'</button><br>';
+                                        }
                                     }
                                 }
                                 $page .= '<input type="hidden" name="action" value="finished"></form></li>';
