@@ -46,12 +46,12 @@ $page = '<!DOCTYPE html>
                                 <h1 class="has-text-centered is-size-4 has-text-weight-bold">Parties en cours</h1>
                                 <form action="../traiteFormQuantik.php" method="post">';
                                 foreach ($games as $game) {
-                                    if ($game['gameStatus'] == 'initialized' || $game['gameStatus'] == 'waitingForPlayer') {
+                                    if ($game['gamestatus'] == 'initialized' || $game['gamestatus'] == 'waitingForPlayer') {
                                         
-                                        $playerOne = PDOQuantik::selectPlayerByID($game['playerOne']);
-                                        $playerTwo = PDOQuantik::selectPlayerByID($game['playerTwo']);
+                                        $playerOne = PDOQuantik::selectPlayerByID($game['playerone']);
+                                        $playerTwo = PDOQuantik::selectPlayerByID($game['playertwo']);
                                         if($playerOne['name']==$player->getName() || $playerTwo['name']==$player->getName()){
-                                            $page .= '<button class="button" type="submit" name="gameID" value="'.$game['gameId'] .'">Partie ['.$game['gameId'] . '] de '.$playerOne['name'].' en cours avec '.$playerTwo['name'].'</button><br>';
+                                            $page .= '<button class="button" type="submit" name="gameID" value="'.$game['gameid'] .'">Partie ['.$game['gameid'] . '] de '.$playerOne['name'].' en cours avec '.$playerTwo['name'].'</button><br>';
                                         }
 
                                        
@@ -63,11 +63,11 @@ $page = '<!DOCTYPE html>
                                 <h3 class="has-text-centered is-size-4 has-text-weight-bold">Parties en attente d\'un joueur</h3>
                                 <form action="../traiteFormQuantik.php" method="post">';
                                 foreach ($games as $game) {
-                                    if ($game['gameStatus'] == 'constructed') {
-                                        $playerOne = PDOQuantik::selectPlayerByID($game['playerOne']);
-                                        $disabled = ($_SESSION['player']->getId() === $game['playerOne']) ? 'disabled' : '';
+                                    if ($game['gamestatus'] == 'constructed') {
+                                        $playerOne = PDOQuantik::selectPlayerByID($game['playerone']);
+                                        $disabled = ($_SESSION['player']->getId() === $game['playerone']) ? 'disabled' : '';
 
-                                        $page .= '<button class="button" type="submit" name="gameID" value="'.$game['gameId'] .'" '.$disabled.'>Partie ['.$game['gameId'] . '] - '.$playerOne['name'].' en attente d\'un autre joueur</button><br>';
+                                        $page .= '<button class="button" type="submit" name="gameID" value="'.$game['gameid'] .'" '.$disabled.'>Partie ['.$game['gameid'] . '] - '.$playerOne['name'].' en attente d\'un autre joueur</button><br>';
                                     }
                                 }
                                 $page .= '<input type="hidden" name="action" value="initialized"></form></li>';
@@ -76,11 +76,11 @@ $page = '<!DOCTYPE html>
                                 <h3 class="has-text-centered is-size-4 has-text-weight-bold">Parties terminées</h3>
                                 <form action="../traiteFormQuantik.php" method="post">';
                                 foreach ($games as $game) {
-                                    if ($game['gameStatus'] == 'finished') {
-                                        $playerOne = PDOQuantik::selectPlayerByID($game['playerOne']);
-                                        $playerTwo = PDOQuantik::selectPlayerByID($game['playerTwo']);
+                                    if ($game['gamestatus'] == 'finished') {
+                                        $playerOne = PDOQuantik::selectPlayerByID($game['playerone']);
+                                        $playerTwo = PDOQuantik::selectPlayerByID($game['playertwo']);
                                         if($playerOne['name']==$player->getName() || $playerTwo['name']==$player->getName()){
-                                            $page .= '<button class="button" type="submit" name="gameID" value="'.$game['gameId'] .'">Partie ['.$game['gameId'] . '] de '.$playerOne['name'].' terminée avec '.$playerTwo['name'].'</button><br>';
+                                            $page .= '<button class="button" type="submit" name="gameID" value="'.$game['gameid'] .'">Partie ['.$game['gameid'] . '] de '.$playerOne['name'].' terminée avec '.$playerTwo['name'].'</button><br>';
                                         }
                                     }
                                 }
