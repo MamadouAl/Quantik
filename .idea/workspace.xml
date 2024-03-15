@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="314ede41-216c-4361-9077-d8bf4a65b7fd" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/image/finish.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image/home.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image/insert_logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image/loading.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image/quantik_jeu.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/image/quantik_plateau.webp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Quantik.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PHP/AbstractGame.php" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/AbstractGame.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PHP/AbstractUIGenerator.php" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/AbstractUIGenerator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PHP/ActionQuantik.php" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/ActionQuantik.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PHP/ArrayPieceQuantik.php" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/ArrayPieceQuantik.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PHP/PDOQuantik.php" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/PDOQuantik.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PHP/PieceQuantik.php" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/PieceQuantik.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PHP/PlateauQuantik.php" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/PlateauQuantik.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PHP/Player.php" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/Player.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PHP/QuantikGame.php" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/QuantikGame.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PHP/QuantikUIGenerator.php" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/QuantikUIGenerator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PHP/testArrayPieceQuantik.php" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/testArrayPieceQuantik.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PHP/testPieceQuantik.php" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/testPieceQuantik.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PHP/testPlateauActionQuantik.php" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/testPlateauActionQuantik.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PHP/testPlateauQuantik.php" beforeDir="false" afterPath="$PROJECT_DIR$/PHP/testPlateauQuantik.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/quantik.php" beforeDir="false" afterPath="$PROJECT_DIR$/quantik.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ressourcesQuantik/EntiteGameQuantik.php" beforeDir="false" afterPath="$PROJECT_DIR$/ressourcesQuantik/EntiteGameQuantik.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ressourcesQuantik/SQL/quantik.sql" beforeDir="false" afterPath="$PROJECT_DIR$/ressourcesQuantik/SQL/quantik.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ressourcesQuantik/env/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/ressourcesQuantik/env/db.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ressourcesQuantik/updateContent.php" beforeDir="false" afterPath="$PROJECT_DIR$/ressourcesQuantik/updateContent.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/traiteFormQuantik.php" beforeDir="false" afterPath="$PROJECT_DIR$/traiteFormQuantik.php" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/usr/bin/php" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="2dj0XBnaN0vWvwQPWGRIQKzu9iT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/etudiant/KM233436/public_html/quantik",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "web.server",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.14808.18" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="314ede41-216c-4361-9077-d8bf4a65b7fd" name="Changes" comment="" />
+      <created>1710506218028</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1710506218028</updated>
+      <workItem from="1710506219095" duration="2056000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

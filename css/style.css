@@ -2,17 +2,25 @@ body{
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    /* background-color: hsl(137, 74%, 77%); */
-    background-color: #cac5c5;
-
+    /*background-color: #fee8d9;*/
 }
+
 html{
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    /* background-color: hsl(137, 74%, 77%); */
-    background-color: #cac5c5;
+    background-image: url("../image/quantik_plateau.webp");
 
+}
+
+.container {
+    background-color: #fee8d9;
+}
+
+.menuQuantik, .quantik {
+/*.loading, .fin, .attente { */
+    border: 3px solid #000; /* Bordure solide d'un pixel, couleur noire */
+    padding: 10px; /* Espacement à l'intérieur du cadre */
 }
 
 .cube{
@@ -23,7 +31,6 @@ html{
     background-size: 150px 150px;
     /* centrer l'image */
     background-position: center;
-    /* centrer l'image */
     background-repeat: no-repeat;
 
 }
@@ -35,7 +42,6 @@ html{
     background-size: 150px 150px;
     /* centrer l'image */
     background-position: center;
-    /* centrer l'image */
     background-repeat: no-repeat;
 
 }
@@ -47,11 +53,9 @@ html{
     background-size: 150px 150px;
     /* centrer l'image */
     background-position: center;
-    /* centrer l'image */
     background-repeat: no-repeat;
-
- 
 }
+
 .cone_blanc{
     width: 100px;
     height: 100px;
@@ -60,10 +64,7 @@ html{
     background-size: 150px 150px;
     /* centrer l'image */
     background-position: center;
-    /* centrer l'image */
     background-repeat: no-repeat;
-
- 
 }
 
 .sphere{
@@ -75,9 +76,8 @@ html{
     background-position: center;
     /* centrer l'image */
     background-repeat: no-repeat;
-
-
 }
+
 .sphere_blanc{
     width: 100px;
     height: 100px;
@@ -85,10 +85,7 @@ html{
     background-size: 150px 150px;
     /* centrer l'image */
     background-position: center;
-    /* centrer l'image */
     background-repeat: no-repeat;
-
-
 }
 
 .cylindre{
@@ -98,7 +95,6 @@ html{
     background-size: 150px 150px;
     /* centrer l'image */
     background-position: center;
-    /* centrer l'image */
     background-repeat: no-repeat;
 }
 
@@ -109,9 +105,9 @@ html{
     background-size: 150px 150px;
     /* centrer l'image */
     background-position: center;
-    /* centrer l'image */
     background-repeat: no-repeat;
 }
+
 .default{
     width: 100px;
     height: 100px;
@@ -124,4 +120,5 @@ html{
 .couleurNoire{
     background-color: rgb(3, 131, 20);
 }
+
 

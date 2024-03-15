@@ -23,7 +23,6 @@ class QuantikGame extends AbstractGame
         $this->plateau = new PlateauQuantik();
         $this->pieceBlack = ArrayPieceQuantik::initPiecesNoires();
         $this->pieceWhite = ArrayPieceQuantik::initPiecesBlanches();
-//        $this->players = $players;
         $this->players = array_pad($players, 2, new Player());
         $this->currentPlayer = 0;
         $this->gameStatus = "choixPiece";
@@ -47,24 +46,15 @@ class QuantikGame extends AbstractGame
         $json .= ',"gameStatus":' . json_encode($this->gameStatus);
         $json .= ',"players":[' . $this->getPlayers()[0]->getJson() . ',' . $this->getPlayers()[1]->getJson() . ']';
         if (is_null($this->couleurPlayer[1]))
-            // $json .= ',"couleurPlayer":[' . $this->couleurPlayer[0]->getJson() . ']';
             $json .= ',"couleurPlayer":' .json_encode($this->couleurPlayer[0]);
 
         else
             $json .= ',"couleurPlayer":[' . json_encode($this->couleurPlayer[0]) . ',' . json_encode($this->couleurPlayer[1]) . ']';        
-            // $json .= ',"couleurPlayer":[' . $this->couleurPlayer[0]->getJson() . ',' . $this->couleurPlayer[1]->getJson() . ']';
         return $json . '}';
     }
     public static function initQuantikGame(string $json): QuantikGame
     {
         $object = json_decode($json);
-        $players = [];
-//        foreach ($object->couleurPlayer as $stdObj) {
-//            $p = new Player();
-//            $p->setName($stdObj->name);
-//            $p->setId($stdObj->id);
-//            $players[] = $p;
-//        }
         $player1 = Player::initPlayer(json_encode($object->players[0]));
         $player2 = Player::initPlayer(json_encode($object->players[1]));
         $qg = new QuantikGame([$player1, $player2]);

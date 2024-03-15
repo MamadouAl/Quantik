@@ -186,9 +186,9 @@ class QuantikUIGenerator extends AbstractUIGenerator
     protected static function  getDivMeessageVictoire(int $couleur): string {
         $res ="<div>";
         if($couleur == 0){
-            $res .= "<p> Les Blancs ont remporté la partie </p>";
+            $res .= "<h1 class='title is-1 has-background-success has-text-white'> Les Blancs ont remporté la partie </h1>";
         }else if ($couleur == 1){
-            $res .=  "<p> Les Noirs ont remporté la partie </p>";
+            $res .=  "<h1 class='title is-1 has-background-success has-text-white'> Les Noirs ont remporté la partie </h1>";
         }
         $res .= self::getLienRecommencer()."</div>";
         return $res;
@@ -322,7 +322,9 @@ class QuantikUIGenerator extends AbstractUIGenerator
     public static function getPageVictoire(QuantikGame $quantik, int $couleurActive, int $posSelection=-1): string {
         $page = self::getDebutHTML('Quantik - Victoire');
         $page .= '<div class="container">';
-
+        $page .= '<div class="has-text-centered">';
+        $page .= self::getDivMeessageVictoire($couleurActive);
+        $page .= '</div>';
         $page .='<div class="columns">';
         $page .='<div class="column is-6">';
         if($couleurActive==0){
@@ -338,9 +340,7 @@ class QuantikUIGenerator extends AbstractUIGenerator
         $page .= self::getDivPlateauQuantik($quantik->plateau);
         $page .= '</div>';
         $page .= '</div>';
-        $page .= '<div class="has-text-centered">';
-        $page .= self::getDivMeessageVictoire($couleurActive);
-        $page .= '</div>';
+
         $page .= '</div>';
         $page .= self::getFinHTML();
         return $page;
